@@ -30,6 +30,7 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True  
 EMAIL_HOST_USER = 'smarttodo.test@gmail.com'
 EMAIL_HOST_PASSWORD = 'yjxjuadeqtcsjhdp'
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -47,6 +48,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'crispy_forms',
+    'crispy_bootstrap4'
 ]
 
 MIDDLEWARE = [

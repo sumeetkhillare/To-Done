@@ -1,11 +1,14 @@
 import datetime
 import json
+import os
 
 from django.shortcuts import render, redirect, get_object_or_404, get_list_or_404
 from django.http import HttpResponse, JsonResponse, Http404
 from django.views.decorators.csrf import csrf_exempt
 from django.db import transaction, IntegrityError
 from django.utils import timezone
+from google.oauth2 import id_token
+from google.auth.transport import requests
 
 from todo.models import List, ListItem, Template, TemplateItem, ListTags, SharedUsers, SharedList
 
@@ -508,3 +511,24 @@ def password_reset_request(request):
     
     password_reset_form = PasswordResetForm()
     return render(request=request, template_name="todo/password/password_reset.html", context={"password_reset_form":password_reset_form})
+
+@csrf_exempt
+def auth_receiver(request):
+    """
+    Google calls this URL after the user has signed in with their Google account.
+    """
+    print("here")
+    token = request.POST['credential']
+
+    try:
+        user_data = id_token.verify_oauth2_token(
+            token, requests.Request(), os.environ['GOOGLE_OAUTH_CLIENT_ID']
+        )
+    except ValueError:
+        return HttpResponse(status=403)
+
+    # In a real app, I'd also save any new user here to the database.
+    # You could also authenticate the user here using the details from Google (https://docs.djangoproject.com/en/4.2/topics/auth/default/#how-to-log-a-user-in)
+    request.session['user_data'] = user_data
+
+    return redirect('login')
