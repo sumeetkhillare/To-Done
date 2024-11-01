@@ -1,0 +1,86 @@
+<!-- kanban.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kanban Board</title>
+    <style>
+        .container {
+            display: flex;
+        }
+        .column {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ccc;
+            margin: 10px;
+        }
+        .task {
+            padding: 10px;
+            margin: 5px 0;
+            border: 1px solid #000;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="column" id="todo">
+        <h2>To Do</h2>
+        <div id="todo-tasks">
+            {% for task in tasks %}
+                {% if task.is_done == False %}  <!-- Adjust based on your actual field -->
+                    <div class="task" data-id="{{ task.id }}">{{ task.item_name }}</div>
+                {% endif %}
+            {% endfor %}
+        </div>
+        <input type="text" id="new-task" placeholder="New task">
+        <button id="add-task">Add</button>
+    </div>
+
+    <div class="column" id="in_progress">
+        <h2>In Progress</h2>
+        <div id="in-progress-tasks">
+            {% for task in tasks %}
+                {% if task.is_done == True and task.finished_on == None %}  <!-- Adjust based on your actual field -->
+                    <div class="task" data-id="{{ task.id }}">{{ task.item_name }}</div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="column" id="done">
+        <h2>Done</h2>
+        <div id="done-tasks">
+            {% for task in tasks %}
+                {% if task.is_done == True %}  <!-- Adjust based on your actual field -->
+                    <div class="task" data-id="{{ task.id }}">{{ task.item_name }}</div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<script>
+    document.getElementById('add-task').addEventListener('click', function() {
+        const title = document.getElementById('new-task').value;
+        fetch('/kanban/add/', {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': '{{ csrf_token }}',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({title}),
+        }).then(response => response.json())
+          .then(data => {
+              if (data.status === 'success') {
+                  location.reload();
+              }
+          });
+    });
+
+    // Drag-and-drop functionality can be implemented here
+</script>
+
+</body>
+</html>
