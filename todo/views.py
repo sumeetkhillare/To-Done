@@ -10,7 +10,7 @@ from django.utils import timezone
 from google.oauth2 import id_token
 from google.auth.transport import requests
 
-from todo.models import List, ListItem, Template, TemplateItem, ListTags, SharedUsers, SharedList
+from todo.models import List, ListItem, Template, TemplateItem, ListTags, SharedUsers, SharedList, Task
 
 from todo.forms import NewUserForm
 from django.conf import settings
@@ -532,3 +532,74 @@ def auth_receiver(request):
     request.session['user_data'] = user_data
 
     return redirect('login')
+
+def kanban_view(request):
+    if not request.user.is_authenticated:
+        return redirect("/login")
+
+    # Fetching all tasks associated with the user
+    tasks = ListItem.objects.filter(list__user_id=request.user.id)  # Assuming ListItem is your existing task model
+    context = {
+        'tasks': tasks,
+    }
+    return render(request, 'todo/kanban_dd.html', context)
+
+@csrf_exempt
+def add_task(request):
+    if not request.user.is_authenticated:
+        return redirect("/login")
+
+    if request.method == 'POST':
+        title = request.POST.get('title')
+        if title:
+            ListItem.objects.create(item_name=title, user=request.user)  # Ensure to link to the correct user
+        return JsonResponse({'status': 'success'})
+
+@csrf_exempt
+def update_task(request, task_id):
+    if not request.user.is_authenticated:
+        return redirect("/login")
+
+    if request.method == 'POST':
+        status = request.POST.get('status')
+        task = get_object_or_404(Task, id=task_id, user=request.user)
+        task.status = status
+        task.save()
+        return JsonResponse({'status': 'success'})
+
+@csrf_exempt
+def delete_task(request, task_id):
+    if not request.user.is_authenticated:
+        return redirect("/login")
+
+    if request.method == 'POST':
+        task = get_object_or_404(Task, id=task_id, user=request.user)
+        task.delete()
+        return JsonResponse({'status': 'success'})
+    
+def update_task_status(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        task_id = data.get('task_id')
+        status = data.get('status')
+
+        print(status)
+
+        try:
+            task = ListItem.objects.get(id=task_id)
+            if status == 'done':
+                task.is_done = True
+                task.status = 'done'
+            elif status == 'in_progress':
+                task.is_done = False  # Adjust as needed for your logic
+                task.status = 'in_progress'
+            else:
+                task.is_done = False  # Default case, for example, mark as not done
+                task.status = 'todo'
+
+            task.save()
+            return JsonResponse({'status': 'success'})
+        except ListItem.DoesNotExist:
+            return JsonResponse({'status': 'error', 'message': 'Task not found.'})
+    
+    return JsonResponse({'status': 'error', 'message': 'Invalid request method.'})

@@ -27,4 +27,9 @@ urlpatterns = [
     path("logout", views.logout_request, name="logout"),
     path("password_reset", views.password_reset_request, name="password_reset"),
     path('auth_receiver', views.auth_receiver, name='auth_receiver'),
+    path('kanban/', views.kanban_view, name='kanban'),
+    path('kanban/add/', views.add_task, name='add_task'),
+    path('kanban/update/<int:task_id>/', views.update_task, name='update_task'),
+    path('kanban/delete/<int:task_id>/', views.delete_task, name='delete_task'),
+    path('update-task-status/', views.update_task_status, name='update_task_status'),
 ]

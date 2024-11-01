@@ -30,6 +30,7 @@ class ListItem(models.Model):
     item_name = models.CharField(max_length=50, null=True, blank=True)
     # the text note of a list item
     item_text = models.CharField(max_length=100)
+    status = models.CharField(max_length=10, null=True)
     is_done = models.BooleanField(default=False)
     created_on = models.DateTimeField()
     list = models.ForeignKey(List, on_delete=models.CASCADE)
@@ -85,3 +86,17 @@ class SharedList(models.Model):
 
     def __str__(self):
         return "%s" % str(self.user)
+
+class Task(models.Model):
+    STATUS_CHOICES = [
+        ('todo', 'To Do'),
+        ('in_progress', 'In Progress'),
+        ('done', 'Done'),
+    ]
+
+    title = models.CharField(max_length=255)
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='todo')
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.title

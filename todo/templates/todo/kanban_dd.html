@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kanban Board</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            /* padding: 20px; */
+            background-color: #f4f4f4;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .kanban-board {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .column {
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: 30%;
+            padding: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            min-height: 300px;
+        }
+
+        .column h2 {
+            text-align: center;
+        }
+
+        .task {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 5px;
+            cursor: grab;
+        }
+
+        .task:active {
+            cursor: grabbing;
+        }
+
+        .over {
+            border: 2px dashed #007bff;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+    ul {
+        list-style: none;
+        padding-left: 0;
+    }
+
+    .topbar {
+        overflow: hidden;
+        background-color: #0fa662;
+        position: fixed;
+        width: 100%;
+        top: 0;
+        z-index: 1;
+    }
+
+    .topbar a {
+        float: left;
+        color: white;
+        text-align: center;
+        padding-left: 15px;
+        text-decoration: none;
+        font-size: 25px;
+        padding: 10px;
+    }
+
+    .topbar ul {
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        display: inline-block;
+    }
+
+    .topbar ul li {
+        display: inline-block;
+        color: #f2f2f2;
+        text-align: center;
+    }
+
+    h1 {
+        color: #0fa662;
+        text-align: center;
+    }
+
+    .main button {
+        display: inline-block;
+        cursor: pointer;
+        border-radius: 10px;
+        background: #0fa662;
+        border: 0;
+        font-size: 16px;
+        height: 37px;
+        padding: 0 11px;
+        margin-top: 5px;
+        text-align: center;
+        width: 100%;
+        min-width: 200px;
+        font-weight: 500;
+        color: #f9f9f9;
+    }
+
+    .main button:hover {
+        background: #0b8f54;
+    }
+
+    input[type=text], input[type=password], input[type=email] {
+        width: 100%;
+        margin: 8px 0;
+        padding: 12px 20px;
+        display: inline-block;
+        border: 0px;
+        border-radius: 10px;
+        box-sizing: border-box;
+        box-shadow: 1px 1px 5px #555 inset;
+    }
+
+    .container {
+        margin: auto;
+        width: 400px;
+    }
+
+    .right {
+        float: right;
+    }
+
+    .main {
+            font-size: 20px;
+            padding: 50px 20px;
+            /* margin-top: 70px; */
+    }
+
+    .g_id_signin {
+            margin-top: 20px;
+    }
+
+    body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            /* display: flex; */
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            /* margin: 10; */
+        }
+
+        .container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        img {
+            border-radius: 50%;
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            margin-top: 10px;
+        }
+
+        p {
+            color: #333;
+            margin: 10px 0;
+        }
+
+        a {
+            color: #007bff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .g_id_signin {
+            margin-top: 20px;
+        }
+    </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            document.querySelectorAll('.task').forEach(task => {
+                task.addEventListener('dragstart', (event) => {
+                    event.dataTransfer.setData('text/plain', task.getAttribute('data-id'));
+                });
+            });
+
+            document.querySelectorAll('.column').forEach(column => {
+                column.addEventListener('dragover', (event) => {
+                    event.preventDefault();
+                    event.target.classList.add('over');
+                });
+
+                column.addEventListener('dragleave', (event) => {
+                    event.target.classList.remove('over');
+                });
+
+                column.addEventListener('drop', (event) => {
+                    event.preventDefault();
+                    event.target.classList.remove('over');
+
+                    const taskId = event.dataTransfer.getData('text/plain');
+                    const taskElement = document.querySelector(`.task[data-id='${taskId}']`);
+                    const targetColumn = event.currentTarget.id;
+
+                    updateTaskStatus(taskId, targetColumn);
+                    event.currentTarget.appendChild(taskElement);
+                });
+            });
+        });
+
+        function updateTaskStatus(taskId, targetColumn) {
+            let status;
+
+            if (targetColumn === 'in_progress') {
+                status = 'in_progress';
+            } else if (targetColumn === 'done') {
+                status = 'done';
+            } else {
+                status = 'todo'; // Assuming you have a TODO column
+            }
+
+            fetch('/update-task-status/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': getCookie('csrftoken'), // Add your CSRF token handling here
+                },
+                body: JSON.stringify({ task_id: taskId, status: status }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                if (data.status === 'error') {
+                    alert('Error updating task status.');
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        }
+
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+    </script>
+</head>
+<body>
+    {% load todo_extras %}
+    <div class="topbar">
+        <ul>
+            <li><a href="/">To-Done</a></li>
+            <li><a class="tabs" href="/todo">Lists</a></li>
+            <li><a class="tabs" href="/templates">Templates</a></li>
+            <li><a class="tabs" href="/kanban">Kanban</a></li>
+        </ul>
+    </div>
+    <div class="main">
+        <h1>Kanban</h1>
+
+            {% for message in messages %}
+            <div style="text-align: center;" class='alert alert-{{message.tags}}'>{{ message }}</div>
+            {% endfor %}
+    <!-- </div>
+
+    <main> -->
+        <div class="kanban-board">
+            <div class="column" id="todo">
+                <h2>To Do</h2>
+                <div id="todo-tasks">
+                    {% for task in tasks %}
+                        {% if task.status == 'todo' or task.status == None %}
+                            <div class="task" data-id="{{ task.id }}" draggable="true">{{ task.item_name }}</div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class="column" id="in_progress">
+                <h2>In Progress</h2>
+                <div id="in-progress-tasks">
+                    {% for task in tasks %}
+                        {% if task.status == 'in_progress' %}
+                            <div class="task" data-id="{{ task.id }}" draggable="true">{{ task.item_name }}</div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class="column" id="done">
+                <h2>Done</h2>
+                <div id="done-tasks">
+                    {% for task in tasks %}
+                        {% if task.status == 'done' %}
+                            <div class="task" data-id="{{ task.id }}" draggable="true" style="background-color: {{ task.tag_color }}">{{ task.item_name }}</div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- <footer>
+        <p>&copy; {{ 2024 }} SE Team 91</p>
+    </footer> -->
+</body>
+</html>
