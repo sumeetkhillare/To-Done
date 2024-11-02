@@ -8,3 +8,4 @@ coverage==6.3.2
 coveralls==1.7.0
 pdoc==12.2.0
 pdoc3==0.10.0
+crispy-bootstrap4=2024.10
