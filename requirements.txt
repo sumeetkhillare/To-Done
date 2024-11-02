@@ -9,3 +9,4 @@ coveralls==1.7.0
 pdoc==12.2.0
 pdoc3==0.10.0
 crispy-bootstrap4==2024.10
+google-auth==2.35.0
