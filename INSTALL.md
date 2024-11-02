@@ -1,6 +1,6 @@
 # Quick Start
 
- * [Download](https://www.python.org/downloads/release/python-390/) and install Python 3.8.0 or higher
+ * [Download](https://www.python.org/downloads/release/python-390/) and install Python 3.9.0 or higher
  * [Install](https://docs.djangoproject.com/en/4.2/topics/install/) Django 4.2
  * Clone the repository
     ```bash
