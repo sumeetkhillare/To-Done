@@ -3,12 +3,12 @@
 </p>
 <h2 align="center">The Only Todo List You Need</h2>
 
-[![Build Status](https://github.com/Chloe-Ku/smart-todo/actions/workflows/django.yml/badge.svg)](https://github.com/Chloe-Ku/smart-todo/actions/workflows/django.yml)
-[![Coverage Status](https://coveralls.io/repos/github/Chloe-Ku/smart-todo/badge.svg?branch=main)](https://coveralls.io/github/Chloe-Ku/smart-todo?branch=main)
-[![license badge](https://img.shields.io/badge/License-MIT-green.svg)](https://github.com/Chloe-Ku/smart-todo/blob/main/LICENSE)
-[![issues badge](https://img.shields.io/github/issues/Chloe-Ku/smart-todo)](https://github.com/Chloe-Ku/smart-todo/issues)
-[![Python 3.8](https://img.shields.io/badge/python-3.8-blue.svg)](https://www.python.org/downloads/release/python-380/)
-[![Django 4.1](https://img.shields.io/badge/django-4.1-blue.svg)](https://docs.djangoproject.com/en/4.1/releases/4.1/)
+[![Build Status](https://github.com/se-zeus/To-Done/actions/workflows/django.yml/badge.svg)](https://github.com/se-zeus/To-Done/actions/workflows/django.yml)
+[![Coverage Status](https://coveralls.io/repos/github/se-zeus/To-Done/badge.svg?branch=main)](https://coveralls.io/github/se-zeus/To-Done?branch=main)
+[![license badge](https://img.shields.io/badge/License-MIT-green.svg)](https://github.com/se-zeus/To-Done/blob/main/LICENSE)
+[![issues badge](https://img.shields.io/github/issues/se-zeus/To-Done)](https://github.com/se-zeus/To-Done/issues)
+[![Python 3.8](https://img.shields.io/badge/python-3.9-blue.svg)](https://www.python.org/downloads/release/python-390/)
+[![Django 4.1](https://img.shields.io/badge/django-4.2-blue.svg)](https://docs.djangoproject.com/en/4.2/releases/4.2/)
 [![DOI](https://zenodo.org/badge/879074390.svg)](https://doi.org/10.5281/zenodo.14029341)
 
 # TO-DONE
@@ -74,13 +74,25 @@ We wanted to work on something that is:
 
 ### Quick Start
 
- * [Download](https://www.python.org/downloads/release/python-380/) and install Python 3.8.0 or higher
- * [Install](https://docs.djangoproject.com/en/4.1/topics/install/) Django 4.1
+ * [Download](https://www.python.org/downloads/release/python-390/) and install Python 3.9.0 or higher
+ * [Install](https://docs.djangoproject.com/en/4.2/topics/install/) Django 4.2
  * Clone the repository
     ```bash
-    $ git clone git@github.com:Chloe-Ku/smart-todo.git
+    $ git clone git@github.com:se-zeus/To-Done.git
+    ```
+* Change directory
+    ```bash
+    $ cd To-Done
+    ```
+* Install necessary libraries
+    ```bash
+    $ pip install -r requirements.txt
     ```
  * Run migrations
+    ```bash
+    $ python manage.py makemigrations
+    ```
+* Migrate the DB
     ```bash
     $ python manage.py migrate
     ```
@@ -88,7 +100,7 @@ We wanted to work on something that is:
     ```bash
     $ python manage.py runserver 8080
     ```
- * Point your browser at http://127.0.0.1:8080 and explore the app
+ * Point your browser at http://localhost:8080 and explore the app
 
 ### Documentation
 [See this page](Documentation.md)
@@ -148,7 +160,7 @@ We wanted to work on something that is:
 ### Want to Contribute?
 
 Want to contribute to this project? Learn about [Contributing](CONTRIBUTING.md). Not sure where to start? Have a look at 
-the [good first issue](https://github.com/shahleon/smart-todo/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22). Found a bug or have a new feature idea? Please create an [Issue](https://github.com/Chloe-Ku/smart-todo/issues) to notify us.
+the [good first issue](https://github.com/shahleon/smart-todo/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22). Found a bug or have a new feature idea? Please create an [Issue](https://github.com/se-zeus/To-Done/issues) to notify us.
 
 ### License
 
