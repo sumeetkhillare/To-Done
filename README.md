@@ -168,6 +168,12 @@ Distributed under the MIT License. See [LICENSE](LICENSE) for more information.
 
 ### Developers (New Version)
 
+1) Shashank Ajit Walke
+2) Sumeet Bapurao Khillare
+3) Xiaoqin Pi
+
+### Developers (Last Version)
+
 <table>
   <tr>
     <td align="center"><a href="https://github.com/m11dedhia"><img src="https://avatars.githubusercontent.com/u/13602231?v=4" width="100px;" alt=""/><br /><sub><b>Megh Dedhia</b></sub></a></td>
@@ -175,11 +181,3 @@ Distributed under the MIT License. See [LICENSE](LICENSE) for more information.
     <td align="center"><a href="https://github.com/SiriPaidipalli"><img src="https://avatars.githubusercontent.com/u/85949733?v=4" width="100px;" alt=""/><br /><sub><b>Siri Paidipalli</b></sub></a><br /></td>
   </tr>
 </table>
-
-### Developers (Last Version)
-
-* [Chiu, Ching-Lun](https://github.com/juliachiu1)
-* [Yu, Hsueh-Yang](https://github.com/Hsueh-YANG)
-* [Lin, Po-Hsun](https://github.com/123standup)
-* [Ku, Li-Ling](https://github.com/Chloe-Ku)
-* [Chiang, Chen-Hsuan](https://github.com/jackson910210)
