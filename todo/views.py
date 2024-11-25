@@ -10,7 +10,7 @@ from django.utils import timezone
 from google.oauth2 import id_token
 from google.auth.transport import requests
 
-from todo.models import List, ListItem, Template, TemplateItem, ListTags, SharedUsers, SharedList, Task
+from todo.models import List, ListItem, Template, TemplateItem, ListTags, SharedUsers, SharedList, Task, VoiceNote
 
 from todo.forms import NewUserForm
 from django.conf import settings
@@ -28,7 +28,11 @@ from django.utils.encoding import force_bytes
 from django.core.mail import EmailMessage
 
 from django.views.decorators.http import require_POST
+<<<<<<< HEAD
 
+=======
+# from .models import VoiceNote, ListItem
+>>>>>>> fa81da6 (skhilla: Added voice notes code)
 
 
 # Render the home page with users' to-do lists
@@ -683,3 +687,35 @@ def update_task_status(request):
             return JsonResponse({'status': 'error', 'message': 'Task not found.'})
     
     return JsonResponse({'status': 'error', 'message': 'Invalid request method.'})
+
+
+@require_POST
+def upload_voice_note(request, list_item_id):
+    print("received")
+    if not request.user.is_authenticated:
+        return JsonResponse({'error': 'Authentication required'}, status=401)
+    list_item_id = 1
+    list_item = get_object_or_404(ListItem, id=list_item_id)
+    audio_file = request.FILES.get('audio_file')
+    print(f"received {audio_file}")
+    if not audio_file:
+        return JsonResponse({'error': 'No audio file provided'}, status=400)
+
+    voice_note = VoiceNote.objects.create(
+        user=request.user,
+        audio_file=audio_file,
+        list_item=list_item
+    )
+
+    return JsonResponse({
+        'id': voice_note.id,
+        'url': voice_note.audio_file.url,
+        'created_at': voice_note.created_at.isoformat()
+    })
+    # return JsonResponse({
+    #     'msg': 'success',
+    # })
+
+def voice_notes_view(request):
+    voice_notes = VoiceNote.objects.all()
+    return render(request, 'todo/voice_notes.html', {'voice_notes': voice_notes})

@@ -727,6 +727,78 @@
                 <br>
                 <input class="save-button" type="submit" value="Save">
             </form>
+        <div class="voice-note-recorder">
+            <button id="recordButton">Record Voice Note</button>
+            <audio id="audioPlayback" controls style="display:none;"></audio>
+        </div>
+        
+        <script>
+        let mediaRecorder;
+        let audioChunks = [];
+        
+        document.getElementById('recordButton').addEventListener('click', toggleRecording);
+        
+        function toggleRecording() {
+            if (mediaRecorder && mediaRecorder.state === "recording") {
+                mediaRecorder.stop();
+                this.textContent = "Record Voice Note";
+            } else {
+                navigator.mediaDevices.getUserMedia({ audio: true })
+                    .then(stream => {
+                        mediaRecorder = new MediaRecorder(stream);
+                        mediaRecorder.start();
+                        this.textContent = "Stop Recording";
+        
+                        mediaRecorder.addEventListener("dataavailable", event => {
+                            audioChunks.push(event.data);
+                        });
+        
+                        mediaRecorder.addEventListener("stop", () => {
+                            const audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
+                            audioChunks = [];
+                            const audioUrl = URL.createObjectURL(audioBlob);
+                            document.getElementById('audioPlayback').src = audioUrl;
+                            document.getElementById('audioPlayback').style.display = 'block';
+                            uploadVoiceNote(audioBlob);
+                        });
+                    });
+            }
+        }
+        
+        function uploadVoiceNote(audioBlob) {
+            const formData = new FormData();
+            formData.append('audio_file', audioBlob, 'voice_note.webm');
+        
+            fetch('/upload-voice-note/1/', {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-CSRFToken': getCookie('csrftoken')
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Voice note uploaded:', data);
+                // You can update the UI here to show the uploaded voice note
+            })
+            .catch(error => console.error('Error:', error));
+        }
+        
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+        </script>
         </ul>
     {% endif %}
 </body>
