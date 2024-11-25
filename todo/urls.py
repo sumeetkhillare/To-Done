@@ -13,6 +13,7 @@ urlpatterns = [
     path('delete-todo', views.delete_todo, name='delete_todo'),
     path('templates', views.template, name='template'),
     path('templates/<int:template_id>', views.template, name='template'),
+    path('edit_template/<str:title>/', views.edit_template, name='edit_template'),
     path('templates/new-from-todo', views.template_from_todo, name='template_from_todo'),
     path('updateListItem', views.updateListItem, name='updateListItem'),
     path('removeListItem', views.removeListItem, name='removeListItem'),

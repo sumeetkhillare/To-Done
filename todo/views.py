@@ -8,6 +8,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.db import transaction, IntegrityError
 from django.utils import timezone
 from google.oauth2 import id_token
+from django.http import JsonResponse
 from google.auth.transport import requests
 
 from todo.models import List, ListItem, Template, TemplateItem, ListTags, SharedUsers, SharedList, Task
@@ -83,13 +84,13 @@ def index(request, list_id=0):
 
 # Create a new to-do list from templates and redirect to the to-do list homepage
 def todo_from_template(request):
+    print("received in todo_from_template")
     if not request.user.is_authenticated:
         return redirect("/login")
     template_id = request.POST['template']
     fetched_template = get_object_or_404(Template, pk=template_id)
     todo = List.objects.create(
         title_text=fetched_template.title_text,
-        created_on=timezone.now(),
         updated_on=timezone.now(),
         user_id_id=request.user.id
     )
@@ -97,7 +98,6 @@ def todo_from_template(request):
         ListItem.objects.create(
             item_name=template_item.item_text,
             item_text="",
-            created_on=timezone.now(),
             finished_on=timezone.now(),
             due_date=timezone.now(),
             tag_color=template_item.tag_color,
@@ -154,6 +154,31 @@ def template(request, template_id=0):
     }
     return render(request, 'todo/template.html', context)
 
+def edit_template(request, title):
+    print(f"in edit template: {title}")
+    print(f" user: {request.user}")
+    if not request.user.is_authenticated:
+        return redirect("/login")
+
+    template = get_object_or_404(Template, title_text=title)
+    print(template)
+    if request.method == 'POST':
+        title_text = 'test-update3'
+
+        # title_text = request.POST.get('title_text', '').strip()
+        if title_text:
+            template.title_text = title_text
+            template.updated_on = timezone.now()
+            template.save()
+            messages.success(request, "Template updated successfully.")
+            print("done")
+        else:
+            messages.error(request, "Title cannot be empty.")
+        # return redirect('/templates')
+
+    # context = {'template': template}
+    # return render(request, 'todo/edit_template.html', context)
+    return JsonResponse({"data": "done"})
 
 # Remove a to-do list item, called by javascript function
 @csrf_exempt

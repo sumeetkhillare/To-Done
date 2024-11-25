@@ -292,10 +292,22 @@
 		{% endif %}
 		</ul>
     </div>
-    <ul class="sidenav">
+    <!-- <ul class="sidenav">
         {% for template in templates %}
             <li><a href="/templates/{{ template.id }}">{{ template.title_text }}</a></li>
         {% endfor %}
+    </ul> -->
+    <ul class="sidenav">
+      {% for template in templates %}
+          <li>
+              <a href="/templates/{{ template.id }}">{{ template.title_text }}</a>
+              <form action="/edit_template/{{ template.title_text }}/" method="post" style="display:inline;">
+                {% csrf_token %}
+                <input type="text" name="title_text" placeholder="Enter new title" required>
+                <button type="submit">Edit</button>
+            </form>
+          </li>
+      {% endfor %}
     </ul>
 
     <div class="main">
