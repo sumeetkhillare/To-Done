@@ -597,14 +597,30 @@ def auth_receiver(request):
 
     return redirect('login')
 
+# def kanban_view(request):
+#     if not request.user.is_authenticated:
+#         return redirect("/login")
+
+#     # Fetching all tasks associated with the user
+#     tasks = ListItem.objects.filter(list__user_id=request.user.id)  # Assuming ListItem is your existing task model
+#     context = {
+#         'tasks': tasks,
+#     }
+#     return render(request, 'todo/kanban_dd.html', context)
+
 def kanban_view(request):
     if not request.user.is_authenticated:
         return redirect("/login")
 
     # Fetching all tasks associated with the user
     tasks = ListItem.objects.filter(list__user_id=request.user.id)  # Assuming ListItem is your existing task model
+    #tasks = Task.objects.all()
     context = {
         'tasks': tasks,
+        'todo_count': tasks.filter(status='todo').count(),
+        'in_progress_count': tasks.filter(status='in_progress').count(),
+        'done_count': tasks.filter(status='done').count(),
+        'total_count': tasks.count()
     }
     return render(request, 'todo/kanban_dd.html', context)
 
