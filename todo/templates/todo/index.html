@@ -438,6 +438,58 @@
             padding-left: 5px;
         }
 
+        .listItem {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 15px;
+            margin-bottom: 8px;
+        }
+
+        .listItem > * {
+            margin-right: 10px;
+        }
+        .listItem > *:last-child {
+            margin-right: 0;
+        }
+
+        .listItem input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+
+        .item-name {
+            flex-grow: 1;
+            padding: 5px;
+            border-bottom: 1px solid transparent;
+            transition: border-color 0.3s;
+        }
+        .item-name:focus {
+            outline: none;
+            border-bottom-color: #0fa662;
+        }
+
+        .item-due-date, .item-color {
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .listItem:hover {
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        @media (max-width: 768px) {
+         .listItem {
+            flex-wrap: wrap;
+         }
+        .item-name {
+            width: 100%;
+            margin-bottom: 10px;
+        }
+        }
+
     </style>
     <meta charset="UTF-8">
     <title>To-Done</title>
@@ -541,11 +593,16 @@
             {% for list_item in latest_list_items %}
             {% if list_item.list_id == list.id %}
             <li style="background-color:{{list_item.tag_color}};" class="listItem {% if list_item.is_done %}done{% endif %}" data-item-id="{{ list_item.id }}">
-                <input type="checkbox" id="{{ "ListItem_"|addstr:list_item.id }}" name="{{ "ListItem_"|addstr:list_item.id }}" value="{{ "ListItem_"|addstr:list_item.id }}" {% if list_item.is_done %}checked{% endif %}>
+                <input type="checkbox" ... aria-label="Mark task as complete" id="{{ "ListItem_"|addstr:list_item.id }}" name="{{ "ListItem_"|addstr:list_item.id }}" value="{{ "ListItem_"|addstr:list_item.id }}" {% if list_item.is_done %}checked{% endif %}>
+                <span class="item-name" ... role="textbox" aria-label="Task name" contenteditable="true">{{ list_item.item_name }}</span>
+                <input type="date" ... aria-label="Due date" class="item-due-date" value="{{ list_item.due_date|date:"Y-m-d" }}">
+                <input type="color" ... aria-label="Task color" class="item-color" value="{{ list_item.tag_color }}">
+                <span class="close" role="button" aria-label="Delete task">x</span>
+                <!-- <input type="checkbox" id="{{ "ListItem_"|addstr:list_item.id }}" name="{{ "ListItem_"|addstr:list_item.id }}" value="{{ "ListItem_"|addstr:list_item.id }}" {% if list_item.is_done %}checked{% endif %}>
                 <span class="item-name" contenteditable="true">{{ list_item.item_name }}</span>
                 <input type="date" class="item-due-date" value="{{ list_item.due_date|date:"Y-m-d" }}">
                 <input type="color" class="item-color" value="{{ list_item.tag_color }}">
-                <span class="close">x</span>
+                <span class="close">x</span> -->
             </li>
             {% endif %}
             {% endfor %}
@@ -629,11 +686,11 @@
                 {% for list_item in latest_list_items %}
                 {% if list_item.list_id == list.id %}
                 <li style="background-color:{{list_item.tag_color}};" class="listItem {% if list_item.is_done %}done{% endif %}" data-item-id="{{ list_item.id }}">
-                    <input type="checkbox" id="{{ "ListItem_"|addstr:list_item.id }}" name="{{ "ListItem_"|addstr:list_item.id }}" value="{{ "ListItem_"|addstr:list_item.id }}" {% if list_item.is_done %}checked{% endif %}>
-                    <span class="item-name" contenteditable="true">{{ list_item.item_name }}</span>
-                    <input type="date" class="item-due-date" value="{{ list_item.due_date|date:"Y-m-d" }}">
-                    <input type="color" class="item-color" value="{{ list_item.tag_color }}">
-                    <span class="close">x</span>
+                    <input type="checkbox" ... aria-label="Mark task as complete" id="{{ "ListItem_"|addstr:list_item.id }}" name="{{ "ListItem_"|addstr:list_item.id }}" value="{{ "ListItem_"|addstr:list_item.id }}" {% if list_item.is_done %}checked{% endif %}>
+                    <span class="item-name" ... role="textbox" aria-label="Task name" contenteditable="true">{{ list_item.item_name }}</span>
+                    <input type="date" ... aria-label="Due date" class="item-due-date" value="{{ list_item.due_date|date:"Y-m-d" }}">
+                    <input type="color" ... aria-label="Task color" class="item-color" value="{{ list_item.tag_color }}">
+                    <span class="close" role="button" aria-label="Delete task">x</span>
                 </li>
                 {% endif %}
                 {% endfor %}

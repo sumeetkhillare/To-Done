@@ -27,6 +27,9 @@ from django.contrib.auth.tokens import default_token_generator
 from django.utils.encoding import force_bytes
 from django.core.mail import EmailMessage
 
+from django.views.decorators.http import require_POST
+
+
 
 # Render the home page with users' to-do lists
 def index(request, list_id=0):
@@ -153,6 +156,44 @@ def template(request, template_id=0):
         'templates': saved_templates
     }
     return render(request, 'todo/template.html', context)
+
+#shashank
+@require_POST
+def update_template_item(request, item_id):
+    if not request.user.is_authenticated:
+        return JsonResponse({'status': 'error', 'message': 'Authentication required'}, status=403)
+    
+    data = json.loads(request.body)
+    template_item = get_object_or_404(TemplateItem, id=item_id)
+    
+    if 'item_text' in data:
+        template_item.item_text = data['item_text']
+    if 'due_date' in data:
+        template_item.due_date = data['due_date']
+    if 'tag_color' in data:
+        template_item.tag_color = data['tag_color']
+    
+    template_item.save()
+    return JsonResponse({'status': 'success'})
+
+@require_POST
+def delete_template_item(request, item_id):
+    if not request.user.is_authenticated:
+        return JsonResponse({'status': 'error', 'message': 'Authentication required'}, status=403)
+    
+    template_item = get_object_or_404(TemplateItem, id=item_id)
+    template_item.delete()
+    return JsonResponse({'status': 'success'})
+
+@require_POST
+def delete_template(request):
+    if not request.user.is_authenticated:
+        return redirect("/login")
+    template_id = request.POST['template']
+    fetched_template = get_object_or_404(Template, pk=template_id)
+    fetched_template.delete()
+    return redirect("/templates")
+#shashank
 
 
 # Remove a to-do list item, called by javascript function
@@ -556,14 +597,30 @@ def auth_receiver(request):
 
     return redirect('login')
 
+# def kanban_view(request):
+#     if not request.user.is_authenticated:
+#         return redirect("/login")
+
+#     # Fetching all tasks associated with the user
+#     tasks = ListItem.objects.filter(list__user_id=request.user.id)  # Assuming ListItem is your existing task model
+#     context = {
+#         'tasks': tasks,
+#     }
+#     return render(request, 'todo/kanban_dd.html', context)
+
 def kanban_view(request):
     if not request.user.is_authenticated:
         return redirect("/login")
 
     # Fetching all tasks associated with the user
     tasks = ListItem.objects.filter(list__user_id=request.user.id)  # Assuming ListItem is your existing task model
+    #tasks = Task.objects.all()
     context = {
         'tasks': tasks,
+        'todo_count': tasks.filter(status='todo').count(),
+        'in_progress_count': tasks.filter(status='in_progress').count(),
+        'done_count': tasks.filter(status='done').count(),
+        'total_count': tasks.count()
     }
     return render(request, 'todo/kanban_dd.html', context)
 
