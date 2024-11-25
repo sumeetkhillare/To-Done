@@ -1,6 +1,7 @@
 from django.contrib import admin
 
-from .models import List, ListTags, ListItem, TemplateItem, SharedUsers, SharedList, Task, Template
+from .models import (List, ListTags, ListItem, TemplateItem, SharedUsers,
+                     SharedList, Task, Template)
 
 admin.site.register(List)
 admin.site.register(ListTags)
