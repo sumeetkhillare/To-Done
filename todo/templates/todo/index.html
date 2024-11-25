@@ -512,7 +512,7 @@
                 <span onclick="newElement({{ list.id }})" class="addBtn">Add</span>
             </div>
         </div>
-        <ul id="{{ "List_"|addstr:list.id }}" class="listItemsUnorderedList">
+        <!-- <ul id="{{ "List_"|addstr:list.id }}" class="listItemsUnorderedList">
             {% for list_item in latest_list_items %}
                 {% if list_item.list_id == list.id %}
                     {% if not list_item.is_done %}
@@ -535,6 +535,19 @@
                             <span class="close">x</span>
                         </li>
                 {% endif %}
+            {% endfor %}
+        </ul> -->
+        <ul id="{{ "List_"|addstr:list.id }}" class="listItemsUnorderedList">
+            {% for list_item in latest_list_items %}
+            {% if list_item.list_id == list.id %}
+            <li style="background-color:{{list_item.tag_color}};" class="listItem {% if list_item.is_done %}done{% endif %}" data-item-id="{{ list_item.id }}">
+                <input type="checkbox" id="{{ "ListItem_"|addstr:list_item.id }}" name="{{ "ListItem_"|addstr:list_item.id }}" value="{{ "ListItem_"|addstr:list_item.id }}" {% if list_item.is_done %}checked{% endif %}>
+                <span class="item-name" contenteditable="true">{{ list_item.item_name }}</span>
+                <input type="date" class="item-due-date" value="{{ list_item.due_date|date:"Y-m-d" }}">
+                <input type="color" class="item-color" value="{{ list_item.tag_color }}">
+                <span class="close">x</span>
+            </li>
+            {% endif %}
             {% endfor %}
         </ul>
     <form action="/templates/new-from-todo" method="post">
@@ -587,7 +600,7 @@
                     <span onclick="newElement({{ list.id }})" class="addBtn">Add</span>
                 </div>
             </div>
-            <ul id="{{ "List_"|addstr:list.id }}" class="listItemsUnorderedList">
+            <!-- <ul id="{{ "List_"|addstr:list.id }}" class="listItemsUnorderedList">
                 {% for list_item in latest_list_items %}
                     {% if list_item.list_id == list.id %}
                         {% if not list_item.is_done %}
@@ -610,6 +623,19 @@
                                 <span class="close">x</span>
                             </li>
                     {% endif %}
+                {% endfor %}
+            </ul> -->
+            <ul id="{{ "List_"|addstr:list.id }}" class="listItemsUnorderedList">
+                {% for list_item in latest_list_items %}
+                {% if list_item.list_id == list.id %}
+                <li style="background-color:{{list_item.tag_color}};" class="listItem {% if list_item.is_done %}done{% endif %}" data-item-id="{{ list_item.id }}">
+                    <input type="checkbox" id="{{ "ListItem_"|addstr:list_item.id }}" name="{{ "ListItem_"|addstr:list_item.id }}" value="{{ "ListItem_"|addstr:list_item.id }}" {% if list_item.is_done %}checked{% endif %}>
+                    <span class="item-name" contenteditable="true">{{ list_item.item_name }}</span>
+                    <input type="date" class="item-due-date" value="{{ list_item.due_date|date:"Y-m-d" }}">
+                    <input type="color" class="item-color" value="{{ list_item.tag_color }}">
+                    <span class="close">x</span>
+                </li>
+                {% endif %}
                 {% endfor %}
             </ul>
         <form action="/templates/new-from-todo" method="post">
@@ -648,6 +674,53 @@
     {% endif %}
 </body>
 <script>
+//shashank
+document.addEventListener('DOMContentLoaded', function() {
+    const listItems = document.querySelectorAll('.listItem');
+    
+    listItems.forEach(item => {
+        const itemId = item.dataset.itemId;
+        const nameField = item.querySelector('.item-name');
+        const dueDateField = item.querySelector('.item-due-date');
+        const colorField = item.querySelector('.item-color');
+
+        nameField.addEventListener('blur', () => updateItem(itemId, 'name', nameField.textContent));
+        dueDateField.addEventListener('change', () => updateItem(itemId, 'due_date', dueDateField.value));
+        colorField.addEventListener('change', () => {
+            updateItem(itemId, 'tag_color', colorField.value);
+            item.style.backgroundColor = colorField.value;
+        });
+    });
+
+    function updateItem(itemId, field, value) {
+        const httpRequest = new XMLHttpRequest();
+        httpRequest.open('POST', '/updateListItemIn/' + itemId);
+        httpRequest.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
+        httpRequest.setRequestHeader('X-CSRFToken', getCookie('csrftoken'));
+        
+        const params = {
+            [field]: value
+        };
+        
+        httpRequest.send(JSON.stringify(params));
+    }
+
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+});
+//shashank
 // Click on a close button to hide the current list item
 var close = document.getElementsByClassName("close");
 var i;
