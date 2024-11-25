@@ -199,6 +199,29 @@ def updateListItem(request, item_id):
         return redirect("/")
     else:
         return redirect("index")
+    
+# shashank
+@csrf_exempt
+def updateListItemIn(request, item_id):
+    if not request.user.is_authenticated:
+        return redirect("/login")
+    
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        list_item = get_object_or_404(ListItem, id=item_id)
+        
+        if 'name' in data:
+            list_item.item_name = data['name']
+        if 'due_date' in data:
+            list_item.due_date = data['due_date']
+        if 'tag_color' in data:
+            list_item.tag_color = data['tag_color']
+        
+        list_item.save()
+        
+        return JsonResponse({'status': 'success'})
+    
+    return JsonResponse({'status': 'error', 'message': 'Invalid request method'})
 
 
 # Add a new to-do list item, called by javascript function
