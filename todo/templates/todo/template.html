@@ -299,24 +299,88 @@
     </ul>
 
     <div class="main">
-        {% for template in templates %}
-            <h2><a href="/templates/{{ template.id }}">{{ template.title_text }}</a></h2>
-            <ul id="myUL">
-                {% for template_item in template.templateitem_set.all %}
-                    <li>{{ template_item }}</li>
-                {% endfor %}
-                <form action="/todo/new-from-template" method="post">
-                    {% csrf_token %}
-                    <input type="hidden" name="template" id="template-{{ template.id }}" value="{{ template.id }}">
-                    <button class="add-template-button" onclick="">Create Todo Using This Template</button>
-                </form>
-            </ul>
-        {% empty %}
-        <h2 id="noTempYet">You don't have any template!</h2>
-        {% endfor %}
-    </div>
+      {% for template in templates %}
+          <h2><a href="/templates/{{ template.id }}">{{ template.title_text }}</a></h2>
+          <ul id="Template_{{ template.id }}" class="templateItemsUnorderedList">
+              {% for template_item in template.templateitem_set.all %}
+                  <li class="templateItem" data-item-id="{{ template_item.id }}">
+                      <span class="item-text" contenteditable="true">{{ template_item.item_text }}</span>
+                      <input type="date" class="item-due-date" value="{{ template_item.due_date|date:'Y-m-d' }}">
+                      <input type="color" class="item-color" value="{{ template_item.tag_color }}">
+                      <span class="close">x</span>
+                  </li>
+              {% endfor %}
+          </ul>
+          <form action="/todo/new-from-template" method="post">
+              {% csrf_token %}
+              <input type="hidden" name="template" id="template-{{ template.id }}" value="{{ template.id }}">
+              <button class="add-template-button" onclick="">Create Todo Using This Template</button>
+          </form>
+          <form action="/delete-template" method="post">
+              {% csrf_token %}
+              <input type="hidden" name="template" id="delete-template-{{ template.id }}" value="{{ template.id }}">
+              <button class="add-template-button delete" onclick="">Delete Template</button>
+          </form>
+      {% empty %}
+          <h2 id="noTempYet">You don't have any template!</h2>
+      {% endfor %}
+  </div>
 </body>
-<script>
 
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const templateItems = document.querySelectorAll('.templateItem');
+    
+    templateItems.forEach(item => {
+        const itemId = item.dataset.itemId;
+        const textField = item.querySelector('.item-text');
+        const dueDateField = item.querySelector('.item-due-date');
+        const colorField = item.querySelector('.item-color');
+
+        textField.addEventListener('blur', () => updateTemplateItem(itemId, 'item_text', textField.textContent));
+        dueDateField.addEventListener('change', () => updateTemplateItem(itemId, 'due_date', dueDateField.value));
+        colorField.addEventListener('change', () => updateTemplateItem(itemId, 'tag_color', colorField.value));
+
+        const closeBtn = item.querySelector('.close');
+        closeBtn.addEventListener('click', () => deleteTemplateItem(itemId, item));
+    });
+
+    function updateTemplateItem(itemId, field, value) {
+        fetch('/update-template-item/' + itemId, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': getCookie('csrftoken')
+            },
+            body: JSON.stringify({ [field]: value })
+        });
+    }
+
+    function deleteTemplateItem(itemId, element) {
+        fetch('/delete-template-item/' + itemId, {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': getCookie('csrftoken')
+            }
+        }).then(() => {
+            element.remove();
+        });
+    }
+
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+});
 </script>
 </html>

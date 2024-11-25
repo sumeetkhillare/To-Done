@@ -34,4 +34,7 @@ urlpatterns = [
     path('kanban/update/<int:task_id>/', views.update_task, name='update_task'),
     path('kanban/delete/<int:task_id>/', views.delete_task, name='delete_task'),
     path('update-task-status/', views.update_task_status, name='update_task_status'),
+    path('update-template-item/<int:item_id>', views.update_template_item, name='update_template_item'),
+    path('delete-template-item/<int:item_id>', views.delete_template_item, name='delete_template_item'),
+    path('delete-template', views.delete_template, name='delete_template'),
 ]
