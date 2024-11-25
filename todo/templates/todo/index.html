@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -330,7 +331,7 @@
           white-space: nowrap;
           display: block;
         }
-	
+
 	    /* Style the input color*/
         .main input[type=color] {
           display: block;
@@ -383,7 +384,7 @@
             font-weight: 500;
             color: #f9f9f9;
         }
-	
+
 	     /* Style the "customize" button */
         .main .add-cust-color-button{
             position: absolute;
@@ -622,7 +623,7 @@
             <input type="hidden" name="todo" id="delete-todo-{{ list.id }}" value="{{ list.id }}">
             <button class="add-template-button delete" onclick="">Delete</button>
         </form>
-        {% endfor %}  
+        {% endfor %}
         {% if not latest_lists %}
             {% if not shared_list %}
         <div class="header">
@@ -926,5 +927,26 @@ function toggleNewTagInput() {
         document.getElementById("newListTag").type='hidden';
     }
 }
+
+            // 添加主题切换功能
+        function toggleTheme() {
+            const body = document.body;
+            const currentTheme = body.getAttribute('data-theme');
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            const themeIcon = document.getElementById('theme-icon');
+
+            body.setAttribute('data-theme', newTheme);
+            themeIcon.textContent = newTheme === 'light' ? '🌞' : '🌙';
+            localStorage.setItem('theme', newTheme);
+        }
+            // 加载保存的主题
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            document.body.setAttribute('data-theme', savedTheme);
+            document.getElementById('theme-icon').textContent =
+                savedTheme === 'light' ? '🌞' : '🌙';
+        });
+
 </script>
+</body>
 </html>
