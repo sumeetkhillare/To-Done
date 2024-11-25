@@ -10,11 +10,11 @@ Individual Team member assesment pdf is on link :- https://drive.google.com/file
 | Number of commits: by different people| 3 |[commit stats](https://github.com/sumeetkhillare/WolfLease/graphs/contributors?from=9%2F28%2F2024) |
 | Issues reports: there are **many**| 3 |[bug reports](https://github.com/users/sumeetkhillare/projects/1)|
 |  issues are being  closed| 3 | [closed tasks](https://github.com/users/sumeetkhillare/projects/1)|
-|Docs: doco generated , format not ugly | 3 |[README.md](https://github.com/sumeetkhillare/WolfLease/blob/master/README.md) |
-|Docs: what: point descriptions of each class/function (in isolation) | 3| [README.md](https://github.com/sumeetkhillare/WolfLease/blob/master/README.md)|
-|Docs: how: for common use cases X,Y,Z mini-tutorials showing worked examples on how to do X,Y,Z|3| [README.md](https://github.com/sumeetkhillare/WolfLease/blob/master/README.md)|
-|Docs: why: docs tell a story, motivate the whole thing, deliver a punchline that makes you want to rush out and use the thing|3| [README.md](https://github.com/sumeetkhillare/WolfLease/blob/master/README.md)|
-|Docs: short video, animated, hosted on your repo. That convinces people why they want to work on your code.| 3 | [Video_at_readme_page](https://github.com/sumeetkhillare/WolfLease/blob/master/README.md)|
+|Docs: doco generated , format not ugly | 3 |[README.md](https://github.com/sumeetkhillare/To-Done/blob/main/README.md) |
+|Docs: what: point descriptions of each class/function (in isolation) | 3| [README.md](https://github.com/sumeetkhillare/To-Done/blob/main/README.md)|
+|Docs: how: for common use cases X,Y,Z mini-tutorials showing worked examples on how to do X,Y,Z|3| [README.md](https://github.com/sumeetkhillare/To-Done/blob/main/README.md)|
+|Docs: why: docs tell a story, motivate the whole thing, deliver a punchline that makes you want to rush out and use the thing|3| [README.md](https://github.com/sumeetkhillare/To-Done/blob/main/README.md)|
+|Docs: short video, animated, hosted on your repo. That convinces people why they want to work on your code.| 3 | [Video_at_readme_page](https://github.com/sumeetkhillare/To-Done/blob/main/README.md)|
 | Use of version control tools|3 |[codecov](https://coveralls.io/github/sumeetkhillare/WolfLease?branch=master)
 | test cases exist|3|[test directory](https://github.com/sumeetkhillare/WolfLease/blob/master/housing/new_test.py)|
 | test cases are routinely executed|3|[Git Action](https://github.com/sumeetkhillare/WolfLease/actions)|
@@ -31,32 +31,32 @@ Individual Team member assesment pdf is on link :- https://drive.google.com/file
 The file LICENSE.md lists rules of usage for this repo |3| [LICENCE](https://github.com/sumeetkhillare/WolfLease/blob/master/LICENSE)
 The file CODE-OF-CONDUCT.md lists rules of behavior for this repo; e.g. see example  |3| [CodeofConduct](https://github.com/sumeetkhillare/WolfLease/blob/master/CODE_OF_CONDUCT.md)
 The file CONTRIBUTING.md lists coding standards and lots of tips on how to extend the system without screwing things up; e.g. see example |3| [Contributing.md](https://github.com/sumeetkhillare/WolfLease/blob/master/CONTRIBUTING.md)
-The file README.md contains all the following |3| [Readme.md](https://github.com/sumeetkhillare/WolfLease/blob/master/README.md)
+The file README.md contains all the following |3| [Readme.md](https://github.com/sumeetkhillare/To-Done/blob/main/README.md)
 Video |3| [video](https://github.com/sumeetkhillare/WolfLease/blob/master/docs/wolf_lease_2.0_project_demo.mp4)
 DOI badge: exists. To get a Digitial Object Indentifier, regiser the project at Zenodo. DOI badges look like this: Zenodo doi badge |3| https://zenodo.org/records/14026736
-Badges showing your style checkers |3| (README.md)[https://github.com/sumeetkhillare/WolfLease/blob/master/README.md]
-Badges showing your code formatters. |3| (README.md)[https://github.com/sumeetkhillare/WolfLease/blob/master/README.md]
-Badges showing your syntax checkers. |3| (README.md)[https://github.com/sumeetkhillare/WolfLease/blob/master/README.md]
-Badges showing your code coverage tools |3| (README.md)[https://github.com/sumeetkhillare/WolfLease/blob/master/README.md]
-Badges showing any other Other automated analysis tools |3| (README.md)[https://github.com/sumeetkhillare/WolfLease/blob/master/README.md]
-| Does your website and documentation provide a clear, high-level overview of your software? | 3 | [README.md](https://github.com/sumeetkhillare/WolfLease/blob/master/README.md)|
-| Does your website and documentation clearly describe the type of user who should use your software? | 3| [README.md](https://github.com/sumeetkhillare/WolfLease/blob/master/README.md)|
-| Do you publish case studies to show how your software has been used by yourself and others? | 3 | [README.md](https://github.com/sumeetkhillare/WolfLease/blob/master/README.md)|
+Badges showing your style checkers |3| (README.md)[https://github.com/sumeetkhillare/To-Done/blob/main/README.md]
+Badges showing your code formatters. |3| (README.md)[https://github.com/sumeetkhillare/To-Done/blob/main/README.md]
+Badges showing your syntax checkers. |3| (README.md)[https://github.com/sumeetkhillare/To-Done/blob/main/README.md]
+Badges showing your code coverage tools |3| (README.md)[https://github.com/sumeetkhillare/To-Done/blob/main/README.md]
+Badges showing any other Other automated analysis tools |3| (README.md)[https://github.com/sumeetkhillare/To-Done/blob/main/README.md]
+| Does your website and documentation provide a clear, high-level overview of your software? | 3 | [README.md](https://github.com/sumeetkhillare/To-Done/blob/main/README.md)|
+| Does your website and documentation clearly describe the type of user who should use your software? | 3| [README.md](https://github.com/sumeetkhillare/To-Done/blob/main/README.md)|
+| Do you publish case studies to show how your software has been used by yourself and others? | 3 | [README.md](https://github.com/sumeetkhillare/To-Done/blob/main/README.md)|
 | Is the name of your project/software unique? |3 | WolfLease
 | Is your project/software name free from trademark violations? |3 | Yes
 | Is your software available as a package that can be deployed without building it? | 3 | Docker package 
 | Is your software available for free? |3 | Yes
 | Is your source code publicly available to download, either as a downloadable bundle or via access to a source code repository? |3 | Yes
 | Is your software hosted in an established, third-party repository like GitHub (https://github.com), BitBucket (https://bitbucket.org),LaunchPad (https://launchpad.net) orSourceForge (https://sourceforge.net)? |3 |[repo](https://github.com/sumeetkhillare/WolfLease)|
-| Is your documentation clearly available on your website or within your software? |3 | [README.md](https://github.com/sumeetkhillare/WolfLease/blob/master/README.md)|
-| Does your documentation include a "quick start" guide, that provides a short overview of how to use your software with some basic examples of use? | 3 |[README.md](https://github.com/sumeetkhillare/WolfLease/blob/master/README.md)|
+| Is your documentation clearly available on your website or within your software? |3 | [README.md](https://github.com/sumeetkhillare/To-Done/blob/main/README.md)|
+| Does your documentation include a "quick start" guide, that provides a short overview of how to use your software with some basic examples of use? | 3 |[README.md](https://github.com/sumeetkhillare/To-Done/blob/main/README.md)|
 | If you provide more extensive documentation, does this provide clear, step-by-step instructions on how to deploy and use your software? |3 |[INSTALL.md](https://github.com/sumeetkhillare/WolfLease/blob/master/INSTALL.md)|
-| Do you provide a comprehensive guide to all your software’s commands, functions and options? |3| [README.md](https://github.com/sumeetkhillare/WolfLease/blob/master/README.md)|
-| Do you provide troubleshooting information that describes the symptoms and step-by-step solutions for problems and error messages? | 3|[README.md](https://github.com/sumeetkhillare/WolfLease/blob/master/README.md)|[CONTRIBUTING.md]()|
-| If your software can be used as a library, package or service by other software, do you provide comprehensive API documentation? | 3|[README.md](https://github.com/sumeetkhillare/WolfLease/blob/master/README.md)|
-| Do you store your documentation under revision control with your source code? |3| Yes [README.md](https://github.com/sumeetkhillare/WolfLease/blob/master/README.md)
+| Do you provide a comprehensive guide to all your software’s commands, functions and options? |3| [README.md](https://github.com/sumeetkhillare/To-Done/blob/main/README.md)|
+| Do you provide troubleshooting information that describes the symptoms and step-by-step solutions for problems and error messages? | 3|[README.md](https://github.com/sumeetkhillare/To-Done/blob/main/README.md)|[CONTRIBUTING.md]()|
+| If your software can be used as a library, package or service by other software, do you provide comprehensive API documentation? | 3|[README.md](https://github.com/sumeetkhillare/To-Done/blob/main/README.md)|
+| Do you store your documentation under revision control with your source code? |3| Yes [README.md](https://github.com/sumeetkhillare/To-Done/blob/main/README.md)
 | Do you publish your release history e.g. release data, version numbers, key features of each release etc. on your web site or in your documentation? | 3 | [releases](https://github.com/sumeetkhillare/WolfLease/releases)
-| Does your software describe how a user can get help with using your software? |3 | [README.md](https://github.com/sumeetkhillare/WolfLease/blob/master/README.md)|
+| Does your software describe how a user can get help with using your software? |3 | [README.md](https://github.com/sumeetkhillare/To-Done/blob/main/README.md)|
 | Does your website and documentation describe what support, if any, you provide to users and developers? |3 | [CONTRIBUTING.md](https://github.com/sumeetkhillare/WolfLease/blob/master/CONTRIBUTING.md)|
 | Does your project have an e-mail address or forum that is solely for supporting users? |3 | [CONTRIBUTING.md](https://github.com/sumeetkhillare/WolfLease/blob/master/CONTRIBUTING.md)|
 | Are e-mails to your support e-mail address received by more than one person? | 3| yes
@@ -88,8 +88,8 @@ Badges showing any other Other automated analysis tools |3| (README.md)[https://
 | Are your test results publicly visible? | 3 | [Github Actions](https://github.com/sumeetkhillare/WolfLease/actions)
 | Are all manually-run tests documented? | 3 | All test cases are automated and documented |
 | Does your project have resources (e.g. blog, Twitter, RSS feed, Facebook page, wiki, mailing list) that are regularly updated with information about your software? | 2 | N/A |
-| Does your website state how many projects and users are associated with your project? | 3 | [README.md](https://github.com/sumeetkhillare/WolfLease/blob/master/README.md)
-| Do you provide success stories on your website? | 3 | [README.md](https://github.com/sumeetkhillare/WolfLease/blob/master/README.md) |
+| Does your website state how many projects and users are associated with your project? | 3 | [README.md](https://github.com/sumeetkhillare/To-Done/blob/main/README.md)
+| Do you provide success stories on your website? | 3 | [README.md](https://github.com/sumeetkhillare/To-Done/blob/main/README.md) |
 | Do you list your important partners and collaborators on your website? | 3 | [Insights](https://github.com/sumeetkhillare/WolfLease/pulse)
 | Do you list your project's publications on your website or link to a resource where these are available? | 3 | [Releases](https://github.com/sumeetkhillare/WolfLease/releases)
 | Do you list third-party publications that refer to your software on your website or link to a resource where these are available? | 3 | N/A |
@@ -101,7 +101,7 @@ Badges showing any other Other automated analysis tools |3| (README.md)[https://
 | Do contributors keep the copyright/IP of their contributions? | 3 | Project under MIT license |
 | Does your website and documentation clearly state the copyright owners of your software and documentation? | 3 | [LICENSE](https://github.com/sumeetkhillare/WolfLease/blob/master/LICENSE) |
 | Does each of your source code files include a copyright statement? | 3 | Project under MIT license |
-| Does your website and documentation clearly state the licence of your software? | 3 | [README.md](https://github.com/sumeetkhillare/WolfLease/blob/master/README.md) |
+| Does your website and documentation clearly state the licence of your software? | 3 | [README.md](https://github.com/sumeetkhillare/To-Done/blob/main/README.md) |
 | Is your software released under an open source licence? | 3 | [LICENSE](https://github.com/sumeetkhillare/WolfLease/blob/master/LICENSE) |
 | Is your software released under an OSI-approved open-source licence? | 3 | [LICENSE](https://github.com/sumeetkhillare/WolfLease/blob/master/LICENSE) |
 | Does each of your source code files include a licence header?  | 3 | yes |
