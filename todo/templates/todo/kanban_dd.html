@@ -344,9 +344,45 @@
     <!-- </div>
 
     <main> -->
+        <!-- <div class="task" data-id="{{ task.id }}" draggable="true">
+            <div class="priority-indicator {{ task.priority }}"></div>
+            {{ task.item_name }}
+          </div> -->
+        
+
+        <div class="kanban-controls">
+        <select id="filter-priority">
+            <option value="all">All Priorities</option>
+            <option value="high">High</option>
+            <option value="medium">Medium</option>
+            <option value="low">Low</option>
+        </select>
+        <select id="sort-by">
+            <option value="date">Sort by Date</option>
+            <option value="priority">Sort by Priority</option>
+        </select>
+        </div>
+
+        <div class="task-summary">
+            <div class="task-counter">
+                <span class="counter-item">
+                    <strong>Total Tasks:</strong> {{ total_count }}
+                </span>
+                <span class="counter-item">
+                    <strong>To Do:</strong> {{ todo_count }}
+                </span>
+                <span class="counter-item">
+                    <strong>In Progress:</strong> {{ in_progress_count }}
+                </span>
+                <span class="counter-item">
+                    <strong>Done:</strong> {{ done_count }}
+                </span>
+            </div>
+        </div>
+
         <div class="kanban-board">
             <div class="column" id="todo">
-                <h2>To Do</h2>
+                <h2>To Do <span class="task-count">{{ tasks|length }}</span> </h2>
                 <div id="todo-tasks">
                     {% for task in tasks %}
                         {% if task.status == 'todo' or task.status == None %}
@@ -354,6 +390,10 @@
                         {% endif %}
                     {% endfor %}
                 </div>
+                <!-- <div class="quick-add-form">
+                    <input type="text" placeholder="Add a new task...">
+                    <button>Add</button>
+                  </div> -->
             </div>
 
             <div class="column" id="in_progress">
