@@ -4,7 +4,7 @@
 <h2 align="center">The Only Todo List You Need</h2>
 
 [![Build Status](https://github.com/se-zeus/To-Done/actions/workflows/django.yml/badge.svg)](https://github.com/se-zeus/To-Done/actions/workflows/django.yml)
-[![Coverage Status](https://coveralls.io/repos/github/se-zeus/To-Done/badge.svg?branch=main)](https://coveralls.io/github/se-zeus/To-Done?branch=main)
+[![Coverage Status](https://coveralls.io/repos/github/sumeetkhillare/To-Done/badge.svg?branch=main)](https://coveralls.io/github/sumeetkhillare/To-Done?branch=main)
 [![license badge](https://img.shields.io/badge/License-MIT-green.svg)](https://github.com/se-zeus/To-Done/blob/main/LICENSE)
 [![issues badge](https://img.shields.io/github/issues/se-zeus/To-Done)](https://github.com/se-zeus/To-Done/issues)
 [![Python 3.8](https://img.shields.io/badge/python-3.9-blue.svg)](https://www.python.org/downloads/release/python-390/)
