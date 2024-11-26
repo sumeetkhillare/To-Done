@@ -19,3 +19,14 @@ SECURE_CROSS_ORIGIN_OPENER_POLICY = "same-origin-allow-popups"
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 ALLOWED_HOSTS = ['*']
+
+
+import environ
+
+env = environ.Env()
+environ.Env.read_env()  # This reads the .env file
+
+# Access variables
+API_KEY = env("API_KEY", default="api_key")
+DOMAIN = env("DOMAIN", default="domain")
+FROM = env("FROM", default="from")

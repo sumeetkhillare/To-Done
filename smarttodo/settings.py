@@ -135,3 +135,13 @@ STATIC_URL = '/static/'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+import environ
+
+env = environ.Env()
+environ.Env.read_env()
+
+API_KEY = env("API_KEY", default="api_key")
+DOMAIN = env("DOMAIN", default="domain")
+FROM = env("FROM", default="from")
