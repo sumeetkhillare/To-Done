@@ -100,3 +100,12 @@ class Task(models.Model):
 
     def __str__(self):
         return self.title
+
+class VoiceNote(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    audio_file = models.FileField(upload_to='voice_notes/')
+    created_at = models.DateTimeField(auto_now_add=True)
+    list_item = models.ForeignKey(ListItem, on_delete=models.CASCADE, related_name='voice_notes')
+
+    def __str__(self):
+        return f"Voice Note for {self.list_item.item_name}"

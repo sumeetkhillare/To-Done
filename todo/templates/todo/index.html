@@ -2,6 +2,10 @@
 <html lang="en">
 <head>
     <style>
+        .disabled {
+            pointer-events: none;
+            opacity: 0.6;
+        }
         body {
             font-family: Calibri, Helvetica, sans-serif;
             margin: 0;
@@ -657,40 +661,19 @@
                     <span onclick="newElement({{ list.id }})" class="addBtn">Add</span>
                 </div>
             </div>
-            <!-- <ul id="{{ "List_"|addstr:list.id }}" class="listItemsUnorderedList">
-                {% for list_item in latest_list_items %}
-                    {% if list_item.list_id == list.id %}
-                        {% if not list_item.is_done %}
-                            <li style="background-color:{{list_item.tag_color}};" class="listItem">
-                        {% else %}
-                             <li style="background-color:{{list_item.tag_color}};" class="listItem done">
-                        {% endif %}
-                        {% if not list_item.is_done %}
-                                <input type="checkbox" id="{{ "ListItem_"|addstr:list_item.id }}" name="{{ "ListItem_"|addstr:list_item.id }}" value="{{ "ListItem_"|addstr:list_item.id }}">
-                        {% else %}
-                                <input type="checkbox" id="{{ "ListItem_"|addstr:list_item.id }}" name="{{ "ListItem_"|addstr:list_item.id }}" value="{{ "ListItem_"|addstr:list_item.id }}" checked>
-                        {% endif %}
-                                <label for="{{ "ListItem_"|addstr:list_item.id }}">{{ list_item.item_name }}</label>
-                                <br>
-                                <label for="{{ "ListItem_"|addstr:list_item.id }}" class="text-right">Start date: {{ list_item.created_on }}</label>
-                                <label for="{{ "ListItem_"|addstr:list_item.id }}" style="color:{{list_item.color}};">Due: {{list_item.due_date}}</label>
-                                {% if list_item.is_done == 1%}
-                                    <p> It took you: {{ list_item.finished_on|timeuntil:list_item.created_on }} to complete</p>
-                                {% endif %}
-                                <span class="close">x</span>
-                            </li>
-                    {% endif %}
-                {% endfor %}
-            </ul> -->
             <ul id="{{ "List_"|addstr:list.id }}" class="listItemsUnorderedList">
                 {% for list_item in latest_list_items %}
                 {% if list_item.list_id == list.id %}
                 <li style="background-color:{{list_item.tag_color}};" class="listItem {% if list_item.is_done %}done{% endif %}" data-item-id="{{ list_item.id }}">
-                    <input type="checkbox" ... aria-label="Mark task as complete" id="{{ "ListItem_"|addstr:list_item.id }}" name="{{ "ListItem_"|addstr:list_item.id }}" value="{{ "ListItem_"|addstr:list_item.id }}" {% if list_item.is_done %}checked{% endif %}>
-                    <span class="item-name" ... role="textbox" aria-label="Task name" contenteditable="true">{{ list_item.item_name }}</span>
-                    <input type="date" ... aria-label="Due date" class="item-due-date" value="{{ list_item.due_date|date:"Y-m-d" }}">
-                    <input type="color" ... aria-label="Task color" class="item-color" value="{{ list_item.tag_color }}">
-                    <span class="close" role="button" aria-label="Delete task">x</span>
+                    <input type="checkbox" id="{{ "ListItem_"|addstr:list_item.id }}" name="{{ "ListItem_"|addstr:list_item.id }}" value="{{ "ListItem_"|addstr:list_item.id }}" {% if list_item.is_done %}checked{% endif %}>
+                    <span class="item-name" contenteditable="true">{{ list_item.item_name }}</span>
+                    <input type="date" class="item-due-date" value="{{ list_item.due_date|date:"Y-m-d" }}">
+                    <input type="color" class="item-color" value="{{ list_item.tag_color }}">
+                    <div class="voice-note-recorder">
+                        <button class="recordButton" data-item-id="{{ list_item.id }}">Record Voice Note</button>
+                        <audio class="audioPlayback" controls style="display:none;"></audio>
+                    </div>
+                    <span class="close">x</span>
                 </li>
                 {% endif %}
                 {% endfor %}
@@ -716,7 +699,7 @@
     </div>
 
     {% if latest_lists or shared_list %}
-        <ul class="rightsidebar" id = "rightsidebar">
+        <ul class="rightsidebar" id="rightsidebar">
             <li><a>List name</a></li>
             <li><a>Item name</a></li>
             <li hidden><a></a></li>
@@ -727,7 +710,116 @@
                 <br>
                 <input class="save-button" type="submit" value="Save">
             </form>
+            <div id="voice-notes-container">
+                <h3>Voice Notes11</h3>
+                <ul id="voice-notes-list"></ul>
+            </div>
+            <div class="voice-note-recorder">
+                <button id="recordButton", disabled="true">Record Voice Note</button>
+                <audio id="audioPlayback" controls style="display:none;"></audio>
+            </div>
         </ul>
+        
+        <style>
+            .voice-notes-container {
+                max-height: 300px;
+                overflow-y: auto;
+            }
+            .voice-notes-list {
+                list-style-type: none;
+                padding: 0;
+            }
+            .voice-notes-list li {
+                margin-bottom: 10px;
+            }
+        </style> 
+        
+        
+        
+        <script>
+        let mediaRecorder;
+        let audioChunks = [];
+
+
+        document.addEventListener('DOMContentLoaded', function() {
+        const recordButtons = document.querySelectorAll('.recordButton');
+        
+        recordButtons.forEach(button => {
+            let mediaRecorder;
+            let audioChunks = [];
+            
+            button.addEventListener('click', function() {
+                const itemId = this.getAttribute('data-item-id');
+                toggleRecording(this, itemId);
+            });
+
+            function toggleRecording(button, itemId) {
+                const audioPlayback = button.nextElementSibling;
+
+                if (mediaRecorder && mediaRecorder.state === "recording") {
+                    mediaRecorder.stop();
+                    button.textContent = "Record Voice Note";
+                } else {
+                    navigator.mediaDevices.getUserMedia({ audio: true })
+                        .then(stream => {
+                            mediaRecorder = new MediaRecorder(stream);
+                            mediaRecorder.start();
+                            button.textContent = "Stop Recording";
+
+                            mediaRecorder.addEventListener("dataavailable", event => {
+                                audioChunks.push(event.data);
+                            });
+
+                            mediaRecorder.addEventListener("stop", () => {
+                                const audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
+                                audioChunks = [];
+                                const audioUrl = URL.createObjectURL(audioBlob);
+                                audioPlayback.src = audioUrl;
+                                audioPlayback.style.display = 'block';
+                                uploadVoiceNote(audioBlob, itemId);
+                            });
+                        });
+                }
+            }
+        });
+    });
+
+    function uploadVoiceNote(audioBlob, itemId) {
+        const formData = new FormData();
+        formData.append('audio_file', audioBlob, 'voice_note.webm');
+        formData.append('item_id', itemId);
+        console.log(itemId);
+        fetch('/upload-voice-note/'+itemId + '/', {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-CSRFToken': getCookie('csrftoken')
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Voice note uploaded:', data);
+            addVoiceNoteToList(data, itemId);
+        })
+        .catch(error => console.error('Error:', error));
+    }
+        
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+    </script>
+    </ul>
     {% endif %}
 </body>
 <script>
@@ -800,6 +892,122 @@ function removeListItem() {
     }
     httpRequest.send(JSON.stringify(params))
 }
+function fetchVoiceNotes(itemId) {
+    var voiceNotesRequest = new XMLHttpRequest();
+    voiceNotesRequest.onreadystatechange = function() {
+        if (this.status === 200) {
+            var response = JSON.parse(this.responseText);
+            var voiceNotes = JSON.parse(response.voice_notes);
+            console.log("in")
+            displayVoiceNotes(voiceNotes);
+        }
+        console.log(this.readyState);
+    };
+    voiceNotesRequest.open('GET', '/voice-notes/' + itemId);
+    voiceNotesRequest.send();
+}
+
+function displayVoiceNotes(voiceNotes) {
+    var voiceNotesList = document.getElementById('voice-notes-list');
+    voiceNotesList.innerHTML = '';
+    console.log(voiceNotes);
+    voiceNotes.forEach(function(note) {
+        console.log(note);
+        var li = document.createElement('li');
+        
+        var audio = document.createElement('audio');
+        audio.controls = true;
+        var source = document.createElement('source');
+        source.src = note.fields.audio_file;
+        console.log(source.src);
+        source.type = "audio/mpeg";
+        audio.appendChild(source);
+        
+        var fallbackText = document.createTextNode("Your browser does not support the audio element.");
+        audio.appendChild(fallbackText);
+        
+        li.appendChild(audio);
+        
+        var createdAt = document.createElement('p');
+        createdAt.textContent = "Created at: " + note.fields.created_at;
+        li.appendChild(createdAt);
+        
+        voiceNotesList.appendChild(li);
+    });
+}
+function enableVoiceNotes(item_name, item_id) {
+    console.log("received"+item_name+" "+item_id);
+    const recordButton = document.getElementById('recordButton');
+    const audioPlayback = document.getElementById('audioPlayback');
+    const voiceNotesList = document.querySelector('.voice-notes-list');
+    // const container = document.querySelector('.voice-notes-container');
+    // container.classList.remove('disabled');
+    recordButton.disabled = false;
+    
+    let mediaRecorder;
+    let audioChunks = [];
+
+    recordButton.addEventListener('click', toggleRecording);
+
+    function toggleRecording() {
+        if (mediaRecorder && mediaRecorder.state === "recording") {
+            mediaRecorder.stop();
+            recordButton.textContent = "Record Voice Note";
+        } else {
+            navigator.mediaDevices.getUserMedia({ audio: true })
+                .then(stream => {
+                    mediaRecorder = new MediaRecorder(stream);
+                    mediaRecorder.start();
+                    recordButton.textContent = "Stop Recording";
+
+                    mediaRecorder.addEventListener("dataavailable", event => {
+                        audioChunks.push(event.data);
+                    });
+
+                    mediaRecorder.addEventListener("stop", () => {
+                        const audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
+                        audioChunks = [];
+                        const audioUrl = URL.createObjectURL(audioBlob);
+                        audioPlayback.src = audioUrl;
+                        audioPlayback.style.display = 'block';
+                        uploadVoiceNote(audioBlob);
+                    });
+                });
+        }
+    }
+
+    function uploadVoiceNote(audioBlob) {
+        const formData = new FormData();
+        formData.append('audio_file', audioBlob, 'voice_note.webm');
+
+        fetch('/upload-voice-note/', {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-CSRFToken': getCookie('csrftoken')
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Voice note uploaded:', data);
+            addVoiceNoteToList(data);
+        })
+        .catch(error => console.error('Error:', error));
+    }
+
+    function addVoiceNoteToList(noteData) {
+        const li = document.createElement('li');
+        li.innerHTML = `
+            <audio controls>
+                <source src="${noteData.audio_url}" type="audio/mpeg">
+                Your browser does not support the audio element.
+            </audio>
+            <p>Created at: ${noteData.created_at}</p>
+        `;
+        voiceNotesList.appendChild(li);
+    }
+}
+
 
 // When click a list item, restore all othe
 var list = document.getElementsByClassName("listItemsUnorderedList");
@@ -843,7 +1051,8 @@ for(let i = 0; i < list.length; i++) {
                   var item_form_node = rightsidebar.children[3]
                   var item_textarea_node = item_form_node.children[1]
                   item_textarea_node.value = jsonResponse['item_text']
-
+                  
+                  fetchVoiceNotes(jsonResponse['item_id']);
                   // set the action url, append item id parameter to the end of url
                   var text_form = rightsidebar.getElementsByTagName("form")[0]
                   text_form.action = "/updateListItem/" + jsonResponse['item_id']

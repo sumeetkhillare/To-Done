@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+        body {
+            font-family: Calibri, Helvetica, sans-serif;
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <ul>
+        {% for note in voice_notes %}
+        <li>
+            <audio controls>
+                <source src="{{ note.audio_file.url }}" type="audio/mpeg">
+                Your browser does not support the audio element.
+            </audio>
+            <p>Created at: {{ note.created_at }}</p>
+        </li>
+        {% endfor %}
+    </ul>
+</body>

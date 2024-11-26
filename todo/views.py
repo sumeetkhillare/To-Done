@@ -10,7 +10,7 @@ from django.utils import timezone
 from google.oauth2 import id_token
 from google.auth.transport import requests
 
-from todo.models import List, ListItem, Template, TemplateItem, ListTags, SharedUsers, SharedList, Task
+from todo.models import List, ListItem, Template, TemplateItem, ListTags, SharedUsers, SharedList, Task, VoiceNote
 
 from todo.forms import NewUserForm
 from django.conf import settings
@@ -26,6 +26,9 @@ from django.utils.http import urlsafe_base64_encode
 from django.contrib.auth.tokens import default_token_generator
 from django.utils.encoding import force_bytes
 from django.core.mail import EmailMessage
+
+from django.views.decorators.http import require_POST
+# from .models import VoiceNote, ListItem
 
 from django.views.decorators.http import require_POST
 
@@ -74,14 +77,17 @@ def index(request, list_id=0):
     cur_date = datetime.date.today()
     for list_item in latest_list_items:       
         list_item.color = "#FF0000" if cur_date > list_item.due_date else "#000000"
-            
+    voice_notes = VoiceNote.objects.all()
+    print('latest_list_items', latest_list_items)
     context = {
         'latest_lists': latest_lists,
         'latest_list_items': latest_list_items,
         'templates': saved_templates,
         'list_tags': list_tags,
         'shared_list': shared_list,
+        'voice_notes': voice_notes
     }
+    print(voice_notes)
     return render(request, 'todo/index.html', context)
 
 # Create a new to-do list from templates and redirect to the to-do list homepage
@@ -683,3 +689,43 @@ def update_task_status(request):
             return JsonResponse({'status': 'error', 'message': 'Task not found.'})
     
     return JsonResponse({'status': 'error', 'message': 'Invalid request method.'})
+
+
+@require_POST
+def upload_voice_note(request, list_item_id):
+    print("received")
+    if not request.user.is_authenticated:
+        return JsonResponse({'error': 'Authentication required'}, status=401)
+    
+    list_item = get_object_or_404(ListItem, id=list_item_id)
+    audio_file = request.FILES.get('audio_file')
+    print(f"received {audio_file}")
+    if not audio_file:
+        return JsonResponse({'error': 'No audio file provided'}, status=400)
+
+    voice_note = VoiceNote.objects.create(
+        user=request.user,
+        audio_file=audio_file,
+        list_item=list_item
+    )
+
+    return JsonResponse({
+        'id': voice_note.id,
+        'url': voice_note.audio_file.url,
+        'created_at': voice_note.created_at.isoformat()
+    })
+
+from django.forms.models import model_to_dict
+from django.core import serializers
+
+def voice_notes_view(request, item_id):
+    print(f"received wt {item_id}")
+    # voice_notes = VoiceNote.objects.all()
+    voice_notes = VoiceNote.objects.filter(list_item_id=item_id)
+    for v in voice_notes:
+        v.audio_file.name = "/media/" + v.audio_file.name
+
+    voice_notes_json = serializers.serialize('json', voice_notes)
+    
+    return JsonResponse({'voice_notes': voice_notes_json}, safe=False)
+    # return render(request, 'todo/voice_notes.html', {'voice_notes': voice_notes})
