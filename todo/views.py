@@ -28,11 +28,10 @@ from django.utils.encoding import force_bytes
 from django.core.mail import EmailMessage
 
 from django.views.decorators.http import require_POST
-<<<<<<< HEAD
-
-=======
 # from .models import VoiceNote, ListItem
->>>>>>> fa81da6 (skhilla: Added voice notes code)
+
+from django.views.decorators.http import require_POST
+
 
 
 # Render the home page with users' to-do lists
@@ -715,9 +714,7 @@ def upload_voice_note(request, list_item_id):
         'url': voice_note.audio_file.url,
         'created_at': voice_note.created_at.isoformat()
     })
-    # return JsonResponse({
-    #     'msg': 'success',
-    # })
+
 from django.forms.models import model_to_dict
 from django.core import serializers
 
