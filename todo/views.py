@@ -78,14 +78,17 @@ def index(request, list_id=0):
     cur_date = datetime.date.today()
     for list_item in latest_list_items:       
         list_item.color = "#FF0000" if cur_date > list_item.due_date else "#000000"
-            
+    voice_notes = VoiceNote.objects.all()
+    print('latest_list_items', latest_list_items)
     context = {
         'latest_lists': latest_lists,
         'latest_list_items': latest_list_items,
         'templates': saved_templates,
         'list_tags': list_tags,
         'shared_list': shared_list,
+        'voice_notes': voice_notes
     }
+    print(voice_notes)
     return render(request, 'todo/index.html', context)
 
 # Create a new to-do list from templates and redirect to the to-do list homepage
@@ -694,7 +697,7 @@ def upload_voice_note(request, list_item_id):
     print("received")
     if not request.user.is_authenticated:
         return JsonResponse({'error': 'Authentication required'}, status=401)
-    list_item_id = 1
+    
     list_item = get_object_or_404(ListItem, id=list_item_id)
     audio_file = request.FILES.get('audio_file')
     print(f"received {audio_file}")
@@ -715,7 +718,17 @@ def upload_voice_note(request, list_item_id):
     # return JsonResponse({
     #     'msg': 'success',
     # })
+from django.forms.models import model_to_dict
+from django.core import serializers
 
-def voice_notes_view(request):
-    voice_notes = VoiceNote.objects.all()
-    return render(request, 'todo/voice_notes.html', {'voice_notes': voice_notes})
+def voice_notes_view(request, item_id):
+    print(f"received wt {item_id}")
+    # voice_notes = VoiceNote.objects.all()
+    voice_notes = VoiceNote.objects.filter(list_item_id=item_id)
+    for v in voice_notes:
+        v.audio_file.name = "/media/" + v.audio_file.name
+
+    voice_notes_json = serializers.serialize('json', voice_notes)
+    
+    return JsonResponse({'voice_notes': voice_notes_json}, safe=False)
+    # return render(request, 'todo/voice_notes.html', {'voice_notes': voice_notes})
