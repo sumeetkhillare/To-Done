@@ -5,9 +5,9 @@ Individual Team member assesment pdf is on link :- https://drive.google.com/file
 
 | Grading Points|Self-Assessment|Links|
 |-----|---------|-----|
-|workload is spread over the whole team (one team member is often Xtimes more productive than the others... but nevertheless, here is a track record that everyone is contributing a lot)| 3 | [Contributor Stats](https://github.com/sumeetkhillare/WolfLease/graphs/contributors?from=9%2F28%2F2024)|
-| Number of commits| 3 |[commit stats](https://github.com/sumeetkhillare/WolfLease/graphs/contributors?from=9%2F28%2F2024) |
-| Number of commits: by different people| 3 |[commit stats](https://github.com/sumeetkhillare/WolfLease/graphs/contributors?from=9%2F28%2F2024) |
+|workload is spread over the whole team (one team member is often Xtimes more productive than the others... but nevertheless, here is a track record that everyone is contributing a lot)| 3 | [Contributor Stats](https://github.com/sumeetkhillare/To-Done/graphs/contributors?from=10%2F26%2F2024)|
+| Number of commits| 3 |[commit stats](https://github.com/sumeetkhillare/To-Done/graphs/contributors?from=10%2F26%2F2024) |
+| Number of commits: by different people| 3 |[commit stats](https://github.com/sumeetkhillare/To-Done/graphs/contributors?from=10%2F26%2F2024) |
 | Issues reports: there are **many**| 3 |[bug reports](https://github.com/users/sumeetkhillare/projects/1)|
 |  issues are being  closed| 3 | [closed tasks](https://github.com/users/sumeetkhillare/projects/1)|
 |Docs: doco generated , format not ugly | 3 |[README.md](https://github.com/sumeetkhillare/To-Done/blob/main/README.md) |
