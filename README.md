@@ -5,8 +5,8 @@
 
 [![Build Status](https://github.com/sumeetkhillare/To-Done/actions/workflows/django.yml/badge.svg)](https://github.com/sumeetkhillare/To-Done/actions/workflows/django.yml)
 [![Coverage Status](https://coveralls.io/repos/github/sumeetkhillare/To-Done/badge.svg?branch=main)](https://coveralls.io/github/sumeetkhillare/To-Done?branch=main)
-[![license badge](https://img.shields.io/badge/License-MIT-green.svg)](https://github.com/se-zeus/To-Done/blob/main/LICENSE)
-[![issues badge](https://img.shields.io/github/issues/se-zeus/To-Done)](https://github.com/se-zeus/To-Done/issues)
+[![license badge](https://img.shields.io/badge/License-MIT-green.svg)](https://github.com/sumeetkhillare/To-Done/blob/main/LICENSE)
+[![issues badge](https://img.shields.io/github/issues/sumeetkhillare/To-Done)](https://github.com/sumeetkhillare/To-Done/issues)
 [![Python 3.8](https://img.shields.io/badge/python-3.9-blue.svg)](https://www.python.org/downloads/release/python-390/)
 [![Django 4.1](https://img.shields.io/badge/django-4.2-blue.svg)](https://docs.djangoproject.com/en/4.2/releases/4.2/)
 [![DOI](https://zenodo.org/badge/879074390.svg)](https://doi.org/10.5281/zenodo.14029341)
