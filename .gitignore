@@ -147,3 +147,4 @@ GitHub.sublime-settings
 
 todo.sqlite3
 tmp/
+.env
