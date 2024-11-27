@@ -3,8 +3,8 @@ from django.contrib.auth.models import User
 
 class List(models.Model):
     title_text = models.CharField(max_length=100)
-    created_on = models.DateTimeField()
-    updated_on = models.DateTimeField()
+    created_on = models.DateTimeField(auto_now_add=True)
+    updated_on = models.DateTimeField(auto_now_add=True)
     list_tag = models.CharField(max_length=50, default='none')
     user_id = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
     is_shared = models.BooleanField(default=False)
@@ -17,7 +17,7 @@ class List(models.Model):
 class ListTags(models.Model):
     user_id = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
     tag_name = models.CharField(max_length=50, null=True, blank=True)
-    created_on = models.DateTimeField()
+    created_on = models.DateTimeField(auto_now_add=True)
 
     objects = models.Manager()
 
@@ -32,7 +32,7 @@ class ListItem(models.Model):
     item_text = models.CharField(max_length=100)
     status = models.CharField(max_length=10, null=True)
     is_done = models.BooleanField(default=False)
-    created_on = models.DateTimeField()
+    created_on = models.DateTimeField(auto_now_add=True)
     list = models.ForeignKey(List, on_delete=models.CASCADE)
     finished_on = models.DateTimeField()
     due_date = models.DateField()
@@ -46,8 +46,8 @@ class ListItem(models.Model):
 
 class Template(models.Model):
     title_text = models.CharField(max_length=100)
-    created_on = models.DateTimeField()
-    updated_on = models.DateTimeField()
+    created_on = models.DateTimeField(auto_now_add=True)
+    updated_on = models.DateTimeField(auto_now_add=True)
     user_id = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
 
     objects = models.Manager()
@@ -58,7 +58,7 @@ class Template(models.Model):
 
 class TemplateItem(models.Model):
     item_text = models.CharField(max_length=100)
-    created_on = models.DateTimeField()
+    created_on = models.DateTimeField(auto_now_add=True)
     template = models.ForeignKey(Template, on_delete=models.CASCADE)
     finished_on = models.DateTimeField()
     due_date = models.DateField()

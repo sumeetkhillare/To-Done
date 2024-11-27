@@ -33,6 +33,28 @@ from django.views.decorators.http import require_POST
 from django.views.decorators.http import require_POST
 
 
+from django.core.cache import cache
+from django.db.models import Prefetch
+
+def get_user_templates(user_id):
+    cache_key = f'user_templates_{user_id}'
+    user_templates = cache.get(cache_key)
+    if user_templates is None:
+        user_templates = Template.objects.filter(user_id=user_id).order_by('created_on').prefetch_related(
+            Prefetch('templateitem_set', queryset=TemplateItem.objects.order_by('created_on'))
+        )
+        cache.set(cache_key, user_templates, timeout=3600)  # Cache for 1 hour
+    return user_templates
+
+def get_user_lists(user_id):
+    cache_key = f'user_lists_{user_id}'
+    user_lists = cache.get(cache_key)
+    if user_lists is None:
+        user_lists = List.objects.filter(user_id=user_id).order_by('-updated_on').prefetch_related(
+            Prefetch('listitem_set', queryset=ListItem.objects.order_by('created_on'))
+        )
+        cache.set(cache_key, user_lists, timeout=3600)  # Cache for 1 hour
+    return user_lists
 
 # Render the home page with users' to-do lists
 def index(request, list_id=0):
@@ -40,6 +62,8 @@ def index(request, list_id=0):
         return redirect("/login")
     
     shared_list = []
+    user_lists = get_user_lists(request.user.id)
+    saved_template = get_user_templates(request.user.id)
 
     if list_id != 0:
         # latest_lists = List.objects.filter(id=list_id, user_id_id=request.user.id)

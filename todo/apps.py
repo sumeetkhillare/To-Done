@@ -29,6 +29,7 @@ def send_mail(mail, subject, text):
 
 def hourly_task():
     time.sleep(2)
+    print("Running hourly task....")
     from todo.models import ListItem
     while True:
         current_date = datetime.now().date()
