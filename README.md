@@ -214,6 +214,9 @@ We wanted to work on something that is:
 </p>
 
 
+### Support (Email)
+Contact us via email for any issues or support - todonehelp@gmail.com
+
 ### Want to Contribute?
 
 Want to contribute to this project? Learn about [Contributing](CONTRIBUTING.md). Not sure where to start? Have a look at 
@@ -238,3 +241,7 @@ Distributed under the MIT License. See [LICENSE](LICENSE) for more information.
     <td align="center"><a href="https://github.com/SiriPaidipalli"><img src="https://avatars.githubusercontent.com/u/85949733?v=4" width="100px;" alt=""/><br /><sub><b>Siri Paidipalli</b></sub></a><br /></td>
   </tr>
 </table>
+
+### Case Studies
+1) Shubham, a first-year international master's student, uses To-Done to prioritize coursework, job applications, and cultural adjustments, streamlining his busy schedule.
+2) Raghu, a Teaching Assistant, leverages To-Done to balance grading assignments, preparing for lectures, and managing his own research deadlines efficiently.
