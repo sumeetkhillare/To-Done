@@ -42,10 +42,8 @@ you can access your todolist on the go. Use our rich library of templates to cre
 - **Optimized Database Performance:** Enjoy faster response times with improved database efficiency.
 
 ### Watch this video to know more about TO-DONE 3.0
-
-
-<//add video>
-[To-Done/docs_proj3](https://github.com/sumeetkhillare/To-Done/raw/main/docs_proj3/to-done-demo.mp4)
+Promo video - https://drive.google.com/file/d/106k6qZdXNxOznSdhpg2Xu2XcjqFb1CGL/view?usp=drive_link <br/>
+Demo video - https://drive.google.com/file/d/1dUVYm3WVzUUGl0bhVv9Hg5zyMuftQAe9/view?usp=drive_link <br/>
 
 ### Watch this video to know more about the original TO-DONE 
 <img src="img/todone-create-list.gif" width="1200" height="500" />
