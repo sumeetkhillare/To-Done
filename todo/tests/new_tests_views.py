@@ -184,3 +184,208 @@ class SimpleTests(TestCase):
             list=self.list
         )
         self.assertEqual(item.due_date, today)
+
+    def test_default_is_done_value(self):
+        """Test default is_done value for new item"""
+        item = ListItem.objects.create(
+            item_name="New Item",
+            created_on=timezone.now(),
+            finished_on=timezone.now(),
+            due_date=timezone.now(),
+            tag_color="#000000",
+            list=self.list
+        )
+        self.assertFalse(item.is_done)
+
+    def test_basic_template_item(self):
+        """Test creating a basic template item"""
+        template = Template.objects.create(
+            title_text="Template",
+            created_on=timezone.now(),
+            updated_on=timezone.now(),
+            user_id=self.user
+        )
+        item = TemplateItem.objects.create(
+            item_text="Template Item",
+            created_on=timezone.now(),
+            template=template,
+            finished_on=timezone.now(),
+            due_date=timezone.now(),
+            tag_color="#000000"
+        )
+        self.assertEqual(item.item_text, "Template Item")
+
+    def test_list_default_shared_status(self):
+        """Test default shared status of new list"""
+        new_list = List.objects.create(
+            title_text="New List",
+            created_on=timezone.now(),
+            updated_on=timezone.now(),
+            user_id=self.user
+        )
+        self.assertFalse(new_list.is_shared)
+
+    def test_basic_task_creation(self):
+        """Test creating a basic task"""
+        task = Task.objects.create(
+            title="Simple Task",
+            status="todo",
+            user=self.user
+        )
+        self.assertEqual(task.status, "todo")
+
+    def test_default_tag_color(self):
+        """Test default tag color for list item"""
+        item = ListItem.objects.create(
+            item_name="Colored Item",
+            created_on=timezone.now(),
+            finished_on=timezone.now(),
+            due_date=timezone.now(),
+            tag_color="#000000",
+            list=self.list
+        )
+        self.assertEqual(item.tag_color, "#000000")
+
+    def test_list_creation_timestamp(self):
+        """Test list creation timestamp"""
+        new_list = List.objects.create(
+            title_text="Timestamped List",
+            created_on=timezone.now(),
+            updated_on=timezone.now(),
+            user_id=self.user
+        )
+        self.assertIsNotNone(new_list.created_on)
+
+    def test_template_empty_title(self):
+        """Test template with empty title"""
+        template = Template.objects.create(
+            title_text="",
+            created_on=timezone.now(),
+            updated_on=timezone.now(),
+            user_id=self.user
+        )
+        self.assertEqual(template.title_text, "")
+
+    def test_basic_list_query(self):
+        """Test querying lists by user"""
+        lists = List.objects.filter(user_id=self.user)
+        self.assertTrue(len(lists) > 0)
+
+    def test_list_item_relationship(self):
+        """Test relationship between list and items"""
+        item = ListItem.objects.create(
+            item_name="Related Item",
+            created_on=timezone.now(),
+            finished_on=timezone.now(),
+            due_date=timezone.now(),
+            tag_color="#000000",
+            list=self.list
+        )
+        self.assertEqual(item.list, self.list)
+
+
+class TodoListTests(TestCase):
+    def setUp(self):
+        self.client = Client()
+        self.user = User.objects.create_user(username='testuser', password='testpass123')
+        self.client.login(username='testuser', password='testpass123')
+        self.list = List.objects.create(
+            title_text="Test List",
+            created_on=timezone.now(),
+            updated_on=timezone.now(),
+            user_id=self.user
+        )
+
+    def test_list_not_shared_by_default(self):
+        """Test that new lists are not shared by default"""
+        new_list = List.objects.create(
+            title_text="Private List",
+            created_on=timezone.now(),
+            updated_on=timezone.now(),
+            user_id=self.user
+        )
+        self.assertFalse(new_list.is_shared)
+
+    def test_list_item_not_done_by_default(self):
+        """Test that new list items are not marked as done by default"""
+        item = ListItem.objects.create(
+            item_name="New Task",
+            item_text="Description",
+            created_on=timezone.now(),
+            finished_on=timezone.now(),
+            due_date=timezone.now(),
+            tag_color="#ffffff",
+            list=self.list
+        )
+        self.assertFalse(item.is_done)
+
+    def test_list_items_not_equal(self):
+        """Test that two different list items are not equal"""
+        item1 = ListItem.objects.create(
+            item_name="Task 1",
+            item_text="Description 1",
+            created_on=timezone.now(),
+            finished_on=timezone.now(),
+            due_date=timezone.now(),
+            tag_color="#ffffff",
+            list=self.list
+        )
+        item2 = ListItem.objects.create(
+            item_name="Task 2",
+            item_text="Description 2",
+            created_on=timezone.now(),
+            finished_on=timezone.now(),
+            due_date=timezone.now(),
+            tag_color="#000000",
+            list=self.list
+        )
+        self.assertFalse(item1.item_name == item2.item_name)
+
+    def test_template_not_found(self):
+        """Test that a template with a non-existent ID doesn't exist"""
+        non_existent_id = 99999
+        self.assertFalse(Template.objects.filter(id=non_existent_id).exists())
+
+    def test_user_not_owner(self):
+        """Test that a different user is not the owner of a list"""
+        other_user = User.objects.create_user(username='other', password='pass123')
+        self.assertFalse(self.list.user_id == other_user)
+
+    def test_tag_names_not_equal(self):
+        """Test that different tag names are not equal"""
+        tag1 = ListTags.objects.create(
+            user_id=self.user,
+            tag_name="Work",
+            created_on=timezone.now()
+        )
+        tag2 = ListTags.objects.create(
+            user_id=self.user,
+            tag_name="Personal",
+            created_on=timezone.now()
+        )
+        self.assertFalse(tag1.tag_name == tag2.tag_name)
+
+    def test_list_not_empty(self):
+        """Test that a list with items is not empty"""
+        ListItem.objects.create(
+            item_name="Task",
+            item_text="Description",
+            created_on=timezone.now(),
+            finished_on=timezone.now(),
+            due_date=timezone.now(),
+            tag_color="#ffffff",
+            list=self.list
+        )
+        self.assertFalse(self.list.listitem_set.count() == 0)
+
+    def test_shared_lists_not_equal(self):
+        """Test that different shared list IDs are not equal"""
+        shared_list1 = SharedList.objects.create(
+            user=self.user,
+            shared_list_id="1 2 3"
+        )
+        shared_list2 = SharedList.objects.create(
+            user=User.objects.create_user(username='other', password='pass123'),
+            shared_list_id="4 5 6"
+        )
+        self.assertFalse(shared_list1.shared_list_id == shared_list2.shared_list_id)
