@@ -1,6 +1,6 @@
 ```
 @CS510 GROUP44 HW1 {
-    Smart-Todo(PYTHON), 
+    To-Done(PYTHON), 
     author = {Shashank Walke, Sumeet Khillare, Xiaoqin Pi},
     doi = {},
     month = {10},
