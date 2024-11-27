@@ -14,15 +14,36 @@
 [![Pylint](https://github.com/sumeetkhillare/To-Done/actions/workflows/pylint.yml/badge.svg)](https://github.com/sumeetkhillare/To-Done/actions/workflows/pylint.yml)
 [![Flakes](https://github.com/sumeetkhillare/To-Done/actions/workflows/flake8.yml/badge.svg)](https://github.com/sumeetkhillare/To-Done/actions/workflows/flake8.yml)
 
-# TO-DONE
+# TO-DONE 3.0
+
+ Tired of wrestling with complex to-do lists? Say hello to To-Done! It is an innovative task management solution that
+ increases your productivity by simplifying task organization. To-Done eliminates the hassle of old task management tools,
+ allowing you to focus on what really matters - getting things done. Its web interface helps you to effortlessly manage your
+ tasks anytime, anywhere. Whether you're organizing personal projects or collaborating with a team, To-Done provides a
+ sorted environment that keeps you on track and in control. Experience the power of simplified productivity with To-Done 
+where tasks get done, not delayed.
 
 `to-done` lets you manage your todo list effectively with minimal effort. With a minimalistic web interface, 
 you can access your todolist on the go. Use our rich library of templates to create a new todo list very fast or create your own.
 
-### Watch this video to know more about TO-DONE 2.0
+# What's New in 3.0
+
+- **Dynamic Task Management:** Edit tasks, deadlines, and priorities on-the-fly for maximum flexibility.
+
+- **Editable Templates:** Save time with editable templates in new version and create to-do list using the same.
+
+- **Multi-Modal Task Notes:** Capture task details through both text and voice notes for convenience.
+
+- **Automated Deadline Reminders:** Stay on track with timely email notifications for approaching deadlines.
+
+- **Enhanced User Interface:** Experience a streamlined, organized task management environment.
+
+- **Optimized Database Performance:** Enjoy faster response times with improved database efficiency.
+
+### Watch this video to know more about TO-DONE 3.0
 
 
-https://user-images.githubusercontent.com/23623764/205810552-556e0449-3f81-4e55-ad9a-414de9731b15.mp4
+<//add video>
 
 
 ### Watch this video to know more about the original TO-DONE 
@@ -52,10 +73,18 @@ We wanted to work on something that is:
 
 `to-done` is a todo list app that is actually useful, very easy to create a basic working version with where a ton of new features can be added, touches upon all the aspects of web programming, database, working in a team etc.
 
+### New Features
+* [Email Notifications for tasks nearing deadline](#email-notification)
+* [Voice Notes for Tasks](#voice-notes)
+* [Edit Feature for Templates](#edit-template)
+* [To-do tasks can be Modified](#modify-tasks)
+* [Dockerized Application](#docker)
+* [Stats on Kanban](#kanban-stats)
+
 ### Key Features (Last Version)
 * [Register](#register)
 * [Login](#login-forget-password)
-* [Create, Update, Delete Todo Lists](#manage-todo-list)
+* [Create, Delete Todo Lists](#manage-todo-list)
 * [Quickly Create Todo Lists From Existing Templates](#templates)
 * [Create Your Own Templates](#templates)
 * [Shared List](#shared-todo-lists)
@@ -64,16 +93,15 @@ We wanted to work on something that is:
 * [Add Reminder Message to task completed](#due-date-color-tags)
 * [Customized Color Tag](#due-date-color-tags)
 * [Add Tags To Todo Lists For Customizable Grouping](#customizable-grouping-tags)
-
-### New Features
 * [Google Oauth sign in](#google-oauth-signin)
 * [Kanban-board](#kanban-board)
+
 
 ### Upcoming Features
  * Social login
  * Export and import to-do lists
  * Gamification - earn points by finishing your tasks, show-off your productivity in social media
- * [List of All Planned Features for Second Phase](https://github.com/users/shahleon/projects/2/views/6)
+ * [List of All Planned Features for Second Phase](https://github.com/sumeetkhillare/To-Done/issues)
 
 ### Quick Start
 
@@ -89,7 +117,7 @@ We wanted to work on something that is:
     ```
 * Install necessary libraries
     ```bash
-    $ pip install -r requirements.txt
+    $ pip install -r requirements2.txt
     ```
  * Run migrations
     ```bash
@@ -107,6 +135,33 @@ We wanted to work on something that is:
 
 ### Documentation
 [See this page](Documentation.md)
+
+### NEW Features
+
+#### Email Notification
+<p float="middle">
+    <img src="img/email.png" width="500" height="250" />
+</p>
+
+#### Voice Notes
+<p float="middle">
+    <img src="img/voice-notes.png" width="500" height="250" />
+</p>
+
+#### Edit Template
+<p float="middle">
+    <img src="img/editable_templates.png" width="500" height="250" />
+</p>
+
+#### Modify Tasks
+<p float="middle">
+    <img src="img/modify-tasks.png" width="500" height="250" />
+</p>
+
+#### Kanban Stats
+<p float="middle">
+    <img src="img/kanban-stats.png" width="500" height="250" />
+</p>
 
 ### Features
 
