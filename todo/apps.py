@@ -2,6 +2,7 @@ from django.apps import AppConfig
 import threading
 import time
 import requests
+import sys
 from django.conf import settings
 from datetime import datetime, timedelta
 
@@ -46,8 +47,9 @@ class TodoConfig(AppConfig):
     name = 'todo'
     thread_started = False
     def ready(self):
-        if not TodoConfig.thread_started:
-            TodoConfig.thread_started = True
-            thread = threading.Thread(target=hourly_task)
-            thread.daemon = True
-            thread.start()
+        if 'test' not in sys.argv:
+            if not TodoConfig.thread_started:
+                TodoConfig.thread_started = True
+                thread = threading.Thread(target=hourly_task)
+                thread.daemon = True
+                thread.start()
