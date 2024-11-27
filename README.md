@@ -10,7 +10,7 @@
 [![issues badge](https://img.shields.io/github/issues/sumeetkhillare/To-Done)](https://github.com/sumeetkhillare/To-Done/issues)
 [![Python 3.8](https://img.shields.io/badge/python-3.9-blue.svg)](https://www.python.org/downloads/release/python-390/)
 [![Django 4.1](https://img.shields.io/badge/django-4.2-blue.svg)](https://docs.djangoproject.com/en/4.2/releases/4.2/)
-[![DOI](https://zenodo.org/badge/879074390.svg)](https://doi.org/10.5281/zenodo.14029341)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.14227059.svg)](https://doi.org/10.5281/zenodo.14227059)
 [![AutoPep 8](https://github.com/sumeetkhillare/To-Done/actions/workflows/autopep8.yml/badge.svg)](https://github.com/sumeetkhillare/To-Done/actions/workflows/autopep8.yml)
 [![Pylint](https://github.com/sumeetkhillare/To-Done/actions/workflows/pylint.yml/badge.svg)](https://github.com/sumeetkhillare/To-Done/actions/workflows/pylint.yml)
 [![Flakes](https://github.com/sumeetkhillare/To-Done/actions/workflows/flake8.yml/badge.svg)](https://github.com/sumeetkhillare/To-Done/actions/workflows/flake8.yml)
