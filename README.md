@@ -4,6 +4,7 @@
 <h2 align="center">The Only Todo List You Need</h2>
 
 [![Build Status](https://github.com/sumeetkhillare/To-Done/actions/workflows/django.yml/badge.svg)](https://github.com/sumeetkhillare/To-Done/actions/workflows/django.yml)
+![Run Tests](https://img.shields.io/badge/tests-passing-brightgreen)
 [![Coverage Status](https://coveralls.io/repos/github/sumeetkhillare/To-Done/badge.svg?branch=main)](https://coveralls.io/github/sumeetkhillare/To-Done?branch=main)
 [![license badge](https://img.shields.io/badge/License-MIT-green.svg)](https://github.com/sumeetkhillare/To-Done/blob/main/LICENSE)
 [![issues badge](https://img.shields.io/github/issues/sumeetkhillare/To-Done)](https://github.com/sumeetkhillare/To-Done/issues)
