@@ -32,7 +32,7 @@ The file CODE-OF-CONDUCT.md lists rules of behavior for this repo; e.g. see exam
 The file CONTRIBUTING.md lists coding standards and lots of tips on how to extend the system without screwing things up; e.g. see example |3| [Contributing.md](https://github.com/sumeetkhillare/To-Done/blob/main/CONTRIBUTING.md)
 The file README.md contains all the following |3| [Readme.md](https://github.com/sumeetkhillare/To-Done/blob/main/README.md)
 Video |3| [video](https://github.com/sumeetkhillare/To-Done/blob/main/README.md)
-DOI badge: exists. To get a Digitial Object Indentifier, regiser the project at Zenodo. DOI badges look like this: Zenodo doi badge |3| https://zenodo.org/records/14026736
+DOI badge: exists. To get a Digitial Object Indentifier, regiser the project at Zenodo. DOI badges look like this: Zenodo doi badge |3| https://zenodo.org/records/14227059
 Badges showing your style checkers |3| (README.md)[https://github.com/sumeetkhillare/To-Done/blob/main/README.md]
 Badges showing your code formatters. |3| (README.md)[https://github.com/sumeetkhillare/To-Done/blob/main/README.md]
 Badges showing your syntax checkers. |3| (README.md)[https://github.com/sumeetkhillare/To-Done/blob/main/README.md]

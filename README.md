@@ -144,7 +144,7 @@ We wanted to work on something that is:
 
 #### Voice Notes
 <p float="middle">
-    <img src="img/voice-notes.png" width="500" height="250" />
+    <img src="img/voice-notes.png" width="250" height="300" />
 </p>
 
 #### Edit Template
